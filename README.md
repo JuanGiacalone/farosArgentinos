@@ -1,6 +1,5 @@
-# vue2-leaflet-faros2
-
-This template should help get you started developing with Vue 3 in Vite.
+# FarosArgentinos
+ Web con fines turisticos
 
 ## Recommended IDE Setup
 
