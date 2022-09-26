@@ -1,4 +1,4 @@
-<template >
+<template>
  <!--  style="width: 18rem;"-->
  <div class="card faros-list" style="width: fit-content"  >
     <ul class="list-group list-group-flush">

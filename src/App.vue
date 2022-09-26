@@ -79,6 +79,7 @@ nav a:first-of-type {
     font-size: 1rem;
     padding: 1.5rem 0;
     margin-top: 0rem;
+  
   }
 }
 </style>

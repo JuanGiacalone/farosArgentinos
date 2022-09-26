@@ -5,9 +5,18 @@
       
       <div class="col-3 ">
         <div class="input-group input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-sm">Buscar</span>
+          <div>
+            <b-dropdown id="dropdown-1" :text="searchFilter" placeholder="Buscar..." class="m-md-2">
+              <b-dropdown-item  @click="searchFilter='Nombre'" > Nombre</b-dropdown-item>
+              <b-dropdown-item  @click="searchFilter='Provincia'">Provincia</b-dropdown-item>
+              <b-dropdown-item>Third Action</b-dropdown-item>
+              <b-dropdown-divider></b-dropdown-divider>
+              <b-dropdown-item active>Active action</b-dropdown-item>
+              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+            </b-dropdown>
+          </div>
                       <!-- Se bindea el input a una variable  -->
-          <input type="text" v-model="searchNombre" placeholder="Nombre" class="form-control" 
+          <input type="text" v-model="searchQuery" placeholder="" class="form-control" 
           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
         </div>
           <!-- Se bindean nuevamente los eventos externos a metodos locales -->
@@ -96,12 +105,13 @@ export default {
             key:0,
             normalIcon: [25,25],
             largeIcon: [50,50],
-            searchNombre: '',
+            searchQuery: '',
+            searchFilter: 'Nombre',
             zoom:5,
             center: L.latLng(-41.94434618654884, -62.15707946259374),
             currentCenter: L.latLng(-41.94434618654884, -62.15707946259374),
             currentZoom: 4,
-            url:'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=166ddc60b6b04768acb4662c580d4a70',
+            url:'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=166ddc60b6b04768acb4662c580d4a70',
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             marker: L.latLng(47.413220, -1.219482),
             icon:iconoFarito,
@@ -176,12 +186,22 @@ export default {
       ...mapGetters(['faros']),
       
       farosFiltrados : function () {
-
+          
         // Devuelve el array filtrado segun el filtro utilizado
          return this.faros.filter((faro) => {
-          
-          return faro.nombre.toLowerCase().match(this.searchNombre.toLowerCase())
-          
+          let campo = this.searchFilter.toLowerCase();
+          let faros;
+          console.log(campo);
+          if( campo == 'nombre')
+          faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
+          else if (campo == 'provincia')
+          {
+            faros = faro.provincia.toLowerCase().match(this.searchQuery.toLowerCase())
+            console.log(faros);
+          }
+
+          return faros
+
          })
          
        },
@@ -192,6 +212,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  .leaflet-container {
+    background-color: white ;
+  }
   ul {
     background-color: whitesmoke;
   }
@@ -201,18 +224,21 @@ export default {
     background-color: whitesmoke;
     li {
       &:hover {
-        background-color: darkgrey;
+        background-color: whitesmoke;
       
       }
     }
   }
-div {
-  
+.row {
+  margin-top: 2rem;
+}
+div.container-fluid {
+  margin-top: 3rem;
   background-color: whitesmoke;
   padding: 1rem;
 }
 .container-fluid {
-  margin-top: 3rem;
+  
 }
 .map {
   height: 80vh;
