@@ -12,19 +12,60 @@
         </div>
           <!-- Se bindean nuevamente los eventos externos a metodos locales -->
           <!-- Se envian los faros Filtrados a la clase hija que se encarga de mostrarlos -->
-       <ListaFaros 
+       <!-- <ListaFaros 
        
        @mouse-over-faro = "mouseOverFaro"
        @mouse-left-faro = "mouseLeftFaro"
-       :faros = "farosFiltrados"/>
+       :faros = "farosFiltrados"/> -->
+       <div class="card faros-list" style="width: fit-content"  >
+        <ul class="list-group list-group-flush">
+    
+           <!--  Se bindean los eventos de html con metodos locales que reciben el indice afectado-->
+          <li
+              @mouseover="mouseOver(idFaro)" 
+              @mouseleave="mouseLeave(idFaro)"
+              v-for="faro, idFaro in farosFiltrados" :key="faro.idFaro"
+          class="list-group-item"
+          >   {{faro.nombre}} {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
+        </ul>
+        
+      </div>
 
       </div>
       <!-- col6 -->
       <div class="col-7">
         <!-- Se pasa el Array faros como prop -->
        <!-- <MapaFaros :faros = "faros"/>  -->
-      <MapaFaros :faros = "farosFiltrados"/>
+      <!-- <MapaFaros :faros = "farosFiltrados"/> -->
+      <div class="row map">
 
+        <l-map
+          @update:zoom="zoomUpdate"
+          @update:center="centerUpdate"
+          :zoom="zoom" 
+          :center="center">
+    
+          <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+          <l-marker
+           
+           v-for="faro in farosFiltrados" :key="faro.idFaro"
+           :lat-lng="latLng(faro.coordenadas.coordinates[0], faro.coordenadas.coordinates[1] )"
+           :name="faro.nombre"
+           >
+           
+           <l-popup>{{faro.nombre}} {{faro.iconSize}}</l-popup>
+            <l-icon
+    
+            :icon-size = faro.iconSize
+            :icon-url = "icon"
+            >
+            
+            </l-icon>
+            <a class="headline">{{faro.nombre}}</a>
+            <l-tooltip>{{faro.nombre}}</l-tooltip>
+          </l-marker>
+        </l-map>
+      </div>
       </div>
       <!-- col6 -->
     </div>
@@ -39,7 +80,10 @@
 import axios from 'axios'
 import ListaFaros from './ListaFaros.vue'
 import MapaFaros from './MapaFaros.vue'
-import {mapState} from 'vuex'
+import L from 'leaflet'
+import {  LMap, LTileLayer, LMarker, LIcon, LPopup} from 'vue2-leaflet'
+import iconoFarito from '../assets/faro.svg'
+import {eventBus} from "../main";
 import { mapGetters } from "vuex";
 export default {
   emits: ['mouse-over-faro', 'mouse-left-faro'],
@@ -49,9 +93,20 @@ export default {
         return {
             
             //faros: [],
+            key:0,
             normalIcon: [25,25],
             largeIcon: [50,50],
-            searchNombre: ''
+            searchNombre: '',
+            zoom:5,
+            center: L.latLng(-41.94434618654884, -62.15707946259374),
+            currentCenter: L.latLng(-41.94434618654884, -62.15707946259374),
+            currentZoom: 4,
+            url:'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=166ddc60b6b04768acb4662c580d4a70',
+            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+            marker: L.latLng(47.413220, -1.219482),
+            icon:iconoFarito,
+            iconSize: [40,40]
+            
         };
     },
     created() {
@@ -71,10 +126,18 @@ export default {
         //     } );
         // });
     },
-    components: { ListaFaros, MapaFaros },
+    components: { ListaFaros, MapaFaros, LMap, LTileLayer, LMarker, LIcon, LPopup },
   
     methods: {
-
+      latLng: function (lat, lng) {
+      return L.latLng(lat,lng)
+    },
+    centerUpdate: function (center) {
+      this.currentCenter = center
+    },
+    zoomUpdate: function (zoom) {
+      this.currentZoom = zoom 
+    },
       // En estos metodos, cuando el user hace un Over o Left, se modifica la nueva propiedad que fue
       // mapeada.
       mouseOverFaro: function (index) {
@@ -91,10 +154,24 @@ export default {
         // this.faros[index].iconSize = this.normalIcon;
         //this.$store.commit('setIconSizeNormal',index);
         this.$root.$emit('mouse-left-faro',index)
+      },
+
+      mouseOver: function (index) {
+        this.$emit('mouse-over-faro',index)
+        eventBus.$emit('mouse-over-faro',index)
+      },
+      mouseLeave: function (index) {
+        this.$emit('mouse-left-faro',index)
+        eventBus.$emit('mouse-left-faro',index)
       }
     },
     // Los metodos dentro de computed permiten modificar y manipular valores que unicamente ya existen en el scope
     computed: { 
+      forceUpdate: function() {
+        console.log('fupdate');
+        this.key++
+        return true
+      },
       
       ...mapGetters(['faros']),
       
@@ -104,9 +181,10 @@ export default {
          return this.faros.filter((faro) => {
           
           return faro.nombre.toLowerCase().match(this.searchNombre.toLowerCase())
-         
+          
          })
-       }
+         
+       },
       }
   }
 
@@ -114,6 +192,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  ul {
+    background-color: whitesmoke;
+  }
+  .faros-list {
+    overflow-y: scroll;
+    height: 95vh;
+    background-color: whitesmoke;
+    li {
+      &:hover {
+        background-color: darkgrey;
+      
+      }
+    }
+  }
 div {
   
   background-color: whitesmoke;
@@ -121,5 +213,8 @@ div {
 }
 .container-fluid {
   margin-top: 3rem;
+}
+.map {
+  height: 80vh;
 }
 </style>

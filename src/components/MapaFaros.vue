@@ -102,7 +102,5 @@ export default {
   .map {
     height: 80vh;
   }
-  l-icon {
-    color:red
-  }
+
 </style>
