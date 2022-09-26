@@ -5,35 +5,40 @@
 
        <!--  Se bindean los eventos de html con metodos locales que reciben el indice afectado-->
       <li
-          @mouseover="mouseOver(index)" 
-          @mouseleave="mouseLeave(index)"
-          v-for="faro, index in faros" :key="index"
+          @mouseover="mouseOver(idFaro)" 
+          @mouseleave="mouseLeave(idFaro)"
+          v-for="faro, idFaro in faros" :key="idFaro"
       
       class="list-group-item"
-      >   {{faro.nombre}} {{faro.coordenadas.coordinates}} {{faro.idFaro}}</li>
+      >   {{faro.nombre}} {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
     </ul>
+    
   </div>
   <!-- Card-->
 </template>
 <script>
-
-  export default {
+import {eventBus} from "../main";
+    export default {
     name: 'ListaFaros',
-    props:{
-      faros: Array
-    },
+     props:{
+       faros: Array,
+     },
     methods: {
       // Avisa a la clase padre que hubo un mouse over sobre el faro con index X
       // Emite un evento...
       mouseOver: function (index) {
         this.$emit('mouse-over-faro',index)
+        eventBus.$emit('mouse-over-faro',index)
       },
       mouseLeave: function (index) {
         this.$emit('mouse-left-faro',index)
+        eventBus.$emit('mouse-left-faro',index)
       }
 
     },
+    
 }
+
 </script>
 <style lang="scss">
   ul {
