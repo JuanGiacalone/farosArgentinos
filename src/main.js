@@ -5,6 +5,8 @@ import App from './App.vue'
 import router from './router'
 import  store  from './stores/faros.js'
 import './assets/main.css'
+import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+
 
 import { LMap, LTileLayer, LMarker, LTooltip } from 'vue2-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -15,6 +17,10 @@ Vue.component('l-marker', LMarker);
 Vue.component('l-tooltip', LTooltip);
 
 export const eventBus = new Vue();
+// Make BootstrapVue available throughout your project
+Vue.use(BootstrapVue)
+// Optionally install the BootstrapVue icon components plugin
+Vue.use(IconsPlugin)
 
 new Vue({
   router,
