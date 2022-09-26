@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ListaAndMapa from '../components/ListaAndMapa.vue'
 
+import { PiniaVuePlugin } from 'pinia'
+Vue.use(PiniaVuePlugin)
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
@@ -29,5 +32,6 @@ const router = new VueRouter({
     }
   ]
 })
+
 
 export default router

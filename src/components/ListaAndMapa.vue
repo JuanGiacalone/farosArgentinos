@@ -22,7 +22,8 @@
       <!-- col6 -->
       <div class="col-7">
         <!-- Se pasa el Array faros como prop -->
-      <MapaFaros :faros = "faros"/>
+       <!-- <MapaFaros :faros = "faros"/>  -->
+      <MapaFaros :faros = "farosFiltrados"/>
 
       </div>
       <!-- col6 -->
@@ -38,30 +39,37 @@
 import axios from 'axios'
 import ListaFaros from './ListaFaros.vue'
 import MapaFaros from './MapaFaros.vue'
-
-
+import {mapState} from 'vuex'
+import { mapGetters } from "vuex";
 export default {
+  emits: ['mouse-over-faro', 'mouse-left-faro'],
     name: "ListaAndMapa",
+    
     data() {
         return {
-            faros: [],
+            
+            //faros: [],
             normalIcon: [25,25],
             largeIcon: [50,50],
             searchNombre: ''
         };
     },
-    mounted: function () {
-        axios.get("http://localhost:3000/faros")
-            .then((res) => {
-            this.faros = res.data
+    created() {
 
-            // Se mapea el array y se le agrega una propiedad para el manejar el tamanio del icono
-            // comienza con un tamanio normal
-            .map( res => {
-                res.iconSize = this.normalIcon;
-                return res
-            } );
-        });
+        
+       this.$store.dispatch('getFaros')
+        
+        // axios.get("http://localhost:3000/faros")
+        //     .then((res) => {
+        //     this.faros = res.data
+
+        //     // Se mapea el array y se le agrega una propiedad para el manejar el tamanio del icono
+        //     // comienza con un tamanio normal
+        //     .map( res => {
+        //         res.iconSize = this.normalIcon;
+        //         return res
+        //     } );
+        // });
     },
     components: { ListaFaros, MapaFaros },
   
@@ -70,28 +78,38 @@ export default {
       // En estos metodos, cuando el user hace un Over o Left, se modifica la nueva propiedad que fue
       // mapeada.
       mouseOverFaro: function (index) {
-        
-       this.faros[index].iconSize = this.largeIcon;
+        // let faro = this.faros.find(faro.idFaro === index
+       
+        //this.$store.commit('setIconSizeLarge',index);
+        this.$root.$emit('mouse-over-faro',index)
+        //   console.log(faro.idFaro);
+        //   faro.iconSize = this.largeIcon;
       },
       mouseLeftFaro: function (index) {
-        
-        this.faros[index].iconSize = this.normalIcon;
+        // let faro = this.faros.find(faro.idFaro === index)
+        //   faro.iconSize = this.normalIcon;
+        // this.faros[index].iconSize = this.normalIcon;
+        //this.$store.commit('setIconSizeNormal',index);
+        this.$root.$emit('mouse-left-faro',index)
       }
     },
     // Los metodos dentro de computed permiten modificar y manipular valores que unicamente ya existen en el scope
-    computed: {
-
+    computed: { 
+      
+      ...mapGetters(['faros']),
+      
       farosFiltrados : function () {
 
         // Devuelve el array filtrado segun el filtro utilizado
-        return this.faros.filter((faro) => {
+         return this.faros.filter((faro) => {
           
           return faro.nombre.toLowerCase().match(this.searchNombre.toLowerCase())
          
-        })
+         })
+       }
       }
-    }
-}
+  }
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
