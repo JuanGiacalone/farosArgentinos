@@ -39,9 +39,8 @@ export default {
       center: L.latLng(-41.94434618654884, -62.15707946259374),
       currentCenter: L.latLng(-41.94434618654884, -62.15707946259374),
       currentZoom: 4,
-      url:'https://tile.thunderforest.com/landscape/{z}/{x}/{y}.png?apikey=166ddc60b6b04768acb4662c580d4a70',
+      url:'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(47.413220, -1.219482),
       icon:iconoFarito,
       iconSize: [25,25]
     }
