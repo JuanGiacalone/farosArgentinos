@@ -6,18 +6,21 @@
       <div class="col-3 ">
         <div class="input-group input-group mb-3">
           <div>
-            <b-dropdown id="dropdown-1" :text="searchFilter" placeholder="Buscar..." class="m-md-2">
-              <b-dropdown-item  @click="searchFilter='Nombre'" > Nombre</b-dropdown-item>
-              <b-dropdown-item  @click="searchFilter='Provincia'">Provincia</b-dropdown-item>
-              <b-dropdown-item>Third Action</b-dropdown-item>
+            <b-dropdown id="dropdown-1" :text="searchFilter" placeholder="Buscar..." class="m-md-2" >
+              <b-dropdown-item  @click="filterSearch('Nombre',false)" > Nombre</b-dropdown-item>
+              <b-dropdown-item  @click="filterSearch('Provincia',false)">Provincia</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
-              <b-dropdown-item active>Active action</b-dropdown-item>
-              <b-dropdown-item disabled>Disabled action</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Acceso Libre',true)">Acceso Libre</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Acceso Restringido',true)">Acceso Restringido</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Acceso Gratuito',true)">Acceso Gratuito</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Acceso Pago',true)">Acceso Pago</b-dropdown-item>
+
+
             </b-dropdown>
           </div>
                       <!-- Se bindea el input a una variable  -->
           <input type="text" v-model="searchQuery" placeholder="" class="form-control" 
-          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled">
         </div>
           <!-- Se bindean nuevamente los eventos externos a metodos locales -->
           <!-- Se envian los faros Filtrados a la clase hija que se encarga de mostrarlos -->
@@ -62,15 +65,15 @@
            :name="faro.nombre"
            >
            
-           <l-popup>{{faro.nombre}} {{faro.iconSize}}</l-popup>
+           <l-popup>{{faro.nombre}}</l-popup>
             <l-icon
     
-            :icon-size = faro.iconSize
+            :icon-size = iconSize
             :icon-url = "icon"
             >
             
             </l-icon>
-            <a class="headline">{{faro.nombre}}</a>
+
             <l-tooltip>{{faro.nombre}}</l-tooltip>
           </l-marker>
         </l-map>
@@ -102,6 +105,7 @@ export default {
         return {
             
             //faros: [],
+            textInputDisabled: false,
             key:0,
             normalIcon: [25,25],
             largeIcon: [50,50],
@@ -115,7 +119,7 @@ export default {
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             marker: L.latLng(47.413220, -1.219482),
             icon:iconoFarito,
-            iconSize: [40,40]
+            iconSize: [30,40]
             
         };
     },
@@ -173,7 +177,12 @@ export default {
       mouseLeave: function (index) {
         this.$emit('mouse-left-faro',index)
         eventBus.$emit('mouse-left-faro',index)
-      }
+      },
+      filterSearch: function (filter,disableInput) {
+        this.searchFilter = filter
+        this.textInputDisabled = disableInput
+      },
+
     },
     // Los metodos dentro de computed permiten modificar y manipular valores que unicamente ya existen en el scope
     computed: { 
@@ -184,21 +193,48 @@ export default {
       },
       
       ...mapGetters(['faros']),
-      
+
       farosFiltrados : function () {
           
         // Devuelve el array filtrado segun el filtro utilizado
          return this.faros.filter((faro) => {
           let campo = this.searchFilter.toLowerCase();
           let faros;
-          console.log(campo);
-          if( campo == 'nombre')
-          faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
-          else if (campo == 'provincia')
-          {
-            faros = faro.provincia.toLowerCase().match(this.searchQuery.toLowerCase())
-            console.log(faros);
+
+          // if( campo == 'nombre')
+          //   faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
+
+          // else if (campo == 'provincia') {
+          //   console.log(campo);
+          //   faros = faro.provincia.toLowerCase().match(this.searchQuery.toLowerCase())
+
+          // }
+          switch (campo) {
+            case 'nombre':
+              faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
+              break;
+
+            case 'provincia':
+              faros = faro.provincia.toLowerCase().match(this.searchQuery.toLowerCase())
+              break;
+            
+            case 'acceso libre':
+              faros = faro.accesible == true
+              break;
+            case 'acceso restringido':
+              faros = faro.accesible == false
+              break;
+            case 'acceso gratuito':
+              faros = faro.accesoPago == false
+              break;
+            case 'acceso pago':
+              faros = faro.accesoPago == true
+              break;
+
+            default:
+              faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
           }
+
 
           return faros
 
@@ -236,9 +272,6 @@ div.container-fluid {
   margin-top: 3rem;
   background-color: whitesmoke;
   padding: 1rem;
-}
-.container-fluid {
-  
 }
 .map {
   height: 80vh;
