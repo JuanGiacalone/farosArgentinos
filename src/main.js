@@ -3,7 +3,7 @@ import  Vue from 'vue';
 import Vuex from "vuex";
 import App from './App.vue'
 import router from './router'
-import  store  from './stores/faros.js'
+import store  from "./stores/farosAndComentarios.js"
 import './assets/main.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 

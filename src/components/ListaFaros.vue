@@ -10,7 +10,7 @@
           v-for="faro, idFaro in faros" :key="idFaro"
       
       class="list-group-item"
-      >   {{faro.nombre}} {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
+      >  <router-link to="/faro">{{faro.nombre}}</router-link>  {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
     </ul>
     
   </div>
