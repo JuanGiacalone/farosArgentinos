@@ -8,15 +8,19 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    faros: [] 
+    faros: [],
+    comentarios: []  
   },
   mutations: {
     setFaros (state, faros) {
       state.faros = faros
       console.log('setFaros' + state.faros);
-      faros.map(faro => {
-        faro.iconSize = []
-      });
+
+    },
+    setComentarios (state, comentarios) {
+      state.comentarios = comentarios
+      console.log('setComentarios' + state.comentarios);
+
     },
     // setIconSizeLarge (state,idFaro) {
       
@@ -40,11 +44,20 @@ export default new Vuex.Store({
       console.log(res);
       context.commit('setFaros', res.data)
 
-    }
+    },
+    async getComentarios (context, idFaro) {
+      const  res  = await axios.get('http://localhost:3000/comentarios/'+ idFaro )
+      console.log(res);
+      context.commit('setComentarios', res.data)
+
+    },
   },
   getters: {
     faros: state => {
       return state.faros
+    },
+    comentarios: state => {
+      return state.comentarios
     }
   }
 })

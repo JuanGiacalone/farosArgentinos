@@ -6,7 +6,7 @@
       <div class="col-3 ">
         <div class="input-group input-group mb-3">
           <div>
-            <b-dropdown id="dropdown-1" :text="searchFilter" placeholder="Buscar..." class="m-md-2" >
+            <b-dropdown id="dropdown-1" :text="searchFilter"  class="m-md-2 " >
               <b-dropdown-item  @click="filterSearch('Nombre',false)" > Nombre</b-dropdown-item>
               <b-dropdown-item  @click="filterSearch('Provincia',false)">Provincia</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
@@ -19,8 +19,8 @@
             </b-dropdown>
           </div>
                       <!-- Se bindea el input a una variable  -->
-          <input type="text" v-model="searchQuery" placeholder="" class="form-control" 
-          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled">
+          <input type="text" v-model="searchQuery" placeholder="Buscar..." class="form-control"  
+          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled" >
         </div>
           <!-- Se bindean nuevamente los eventos externos a metodos locales -->
           <!-- Se envian los faros Filtrados a la clase hija que se encarga de mostrarlos -->
@@ -38,7 +38,7 @@
               @mouseleave="mouseLeave(idFaro)"
               v-for="faro, idFaro in farosFiltrados" :key="faro.idFaro"
           class="list-group-item"
-          >   {{faro.nombre}} {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
+          >   <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link> {{faro.coordenadas.coordinates}} {{faro.idFaro}} {{faro.iconSize}}</li>
         </ul>
         
       </div>
@@ -65,7 +65,7 @@
            :name="faro.nombre"
            >
            
-           <l-popup>{{faro.nombre}}</l-popup>
+           <l-popup><router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></l-popup>
             <l-icon
     
             :icon-size = iconSize
@@ -248,6 +248,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+
   .leaflet-container {
     background-color: white ;
   }
@@ -266,10 +267,11 @@ export default {
     }
   }
 .row {
-  margin-top: 2rem;
+  margin-top: 0rem;
 }
 div.container-fluid {
-  margin-top: 3rem;
+  
+  margin-top: 5rem;
   background-color: whitesmoke;
   padding: 1rem;
 }
