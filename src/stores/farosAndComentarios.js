@@ -1,4 +1,4 @@
-//stores/users.js
+
 // Import axios to make HTTP requests
 import Vue from 'vue'
 import axios from "axios"
@@ -6,7 +6,8 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+const store = new Vuex.Store({
+  namespaced: true,
   state: {
     faros: [],
     comentarios: []  
@@ -22,6 +23,15 @@ export default new Vuex.Store({
       console.log('setComentarios' + state.comentarios);
 
     },
+    pushComentario(state,comentario) {
+      try {
+        state.faros.push(comentario)
+      } catch (error) {
+        console.log(error);
+      }
+
+
+    }
     // setIconSizeLarge (state,idFaro) {
       
     //   let faro = state.faros.find( faro => faro.idFaro == idFaro )
@@ -40,16 +50,36 @@ export default new Vuex.Store({
   },
   actions: {
     async getFaros (context) {
-      const  res  = await axios.get('http://localhost:3000/faros')
-      console.log(res);
-      context.commit('setFaros', res.data)
+      try {
+        const  res  = await axios.get('http://localhost:3000/faros')
+
+        context.commit('setFaros', res.data)
+      } catch (error) {
+        console.log('getFaros failed' + error);
+      }
+
 
     },
     async getComentarios (context, idFaro) {
-      const  res  = await axios.get('http://localhost:3000/comentarios/'+ idFaro )
-      console.log(res);
-      context.commit('setComentarios', res.data)
+      try {
+        const  res  = await axios.get('http://localhost:3000/comentarios/'+ idFaro )
 
+        context.commit('setComentarios', res.data)
+      } catch (error) {
+        console.log('getComentarios failed' + error);
+      }
+    },
+    async putComentario(context, data) {
+
+      try {
+
+        const com = await axios.put('http://localhost:3000/comentarios/'+data.comentarios.idFaro, data )
+
+        context.commit('pushComentario', data)
+
+      } catch (error) {
+        console.log('putComentario failed' + error);
+      }
     },
   },
   getters: {
@@ -62,6 +92,7 @@ export default new Vuex.Store({
   }
 })
 
+export default store
 
 
 // export const useFaroStore = defineStore("faro", {
