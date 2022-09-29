@@ -40,7 +40,7 @@
                         style="margin-left: 1rem; width:75%">
                         <b-form-input
                             id="input-1"
-                            v-model="form.email"
+                            v-model="form.comentarios.email"
                             type="email"
                             placeholder="Ingresa tu email"
                             required
@@ -49,7 +49,7 @@
                     <b-form-group id="input-group-2" style="margin-left: 1rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
                         <b-form-input
                           id="input-2"
-                          v-model="form.nombre"
+                          v-model="form.comentarios.nombre"
                           placeholder="Ingresa tu nombre"
 
                           required
@@ -60,7 +60,7 @@
                                 <b-form-textarea
                                 style="width:75%; resize:auto; margin-left: 1rem ; margin-bottom: 0.5rem"
                                 id="textarea"
-                                v-model="form.cuerpo"
+                                v-model="form.comentarios.cuerpo"
                                 placeholder="Ingresa tu comentario..."
                                 rows="3"
                                 max-rows="6"
@@ -104,7 +104,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
  export default {
     name: "FaroAndComments",
@@ -115,7 +115,7 @@ import { mapGetters } from "vuex";
 
     created() {
 
-        this.$store.dispatch('getComentarios', this.faro.idFaro)
+        this.$store.dispatch("getComentarios", this.faro.idFaro)
 
         // Si se refresca, se devuelve al user al inicio
         if(this.faro == undefined) {
@@ -132,32 +132,42 @@ import { mapGetters } from "vuex";
         return {
             show:true,
             form: {
+                comentarios:{
+                idFaro: this.faro.idFaro,
+                fecha:'',
                 email: '',
                 nombre: '',
                 cuerpo: '',
+                }
             }
+
+
+            
         }
     },
     computed: {
-        ...mapGetters(['comentarios'])
+        ...mapGetters(['comentarios']),
     },
     methods: {
-      onSubmit(event) {
-        event.preventDefault()
-        alert(JSON.stringify(this.form))
+
+        onSubmit(event) {
+           event.preventDefault()
+            this.form.comentarios.fecha = new Date();
+
+            this.$store.dispatch("putComentario", Object.assign({},this.form))
       },
-      onReset(event) {
-        event.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.nombre = ''
-        this.form.cuerpo = ''
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
-      }
+        onReset(event) {
+            event.preventDefault()
+            // Reset our form values
+            this.form.comentarios.email = ''
+            this.form.comentarios.nombre = ''
+            this.form.comentarios.cuerpo = ''
+            // Trick to reset/clear native browser form validation state
+            this.show = false
+            this.$nextTick(() => {
+            this.show = true
+            })
+        }
 
     },
 }
