@@ -9,6 +9,9 @@ Vue.use(PiniaVuePlugin)
 
 Vue.use(VueRouter)
 
+ // dynamic imports
+ const FaroAndCommentsLazy = () => import('../components/FaroAndComments.vue');
+
 const router = new VueRouter({
   mode: 'history',
   base: import.meta.env.BASE_URL,
@@ -21,7 +24,7 @@ const router = new VueRouter({
     {
       path: '/faro/',
       name: 'faro',
-      component: FaroAndComments,
+      component: FaroAndCommentsLazy,
       props: true,
 
       // route level code-splitting

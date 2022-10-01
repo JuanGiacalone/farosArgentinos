@@ -1,4 +1,7 @@
 <template>
+  <KeepAlive>
+
+
   <div class="container-fluid">
 
     <div class="row">
@@ -85,6 +88,7 @@
     
   </div>
   <!-- container -->
+</KeepAlive>
 </template>
 
 <script>
@@ -123,10 +127,12 @@ export default {
             
         };
     },
+    beforeCreate() {
+      this.$store.dispatch('getFaros')
+    },
     created() {
-
         
-       this.$store.dispatch('getFaros')
+      
         
         // axios.get("http://localhost:3000/faros")
         //     .then((res) => {
@@ -241,7 +247,8 @@ export default {
          })
          
        },
-      }
+
+    }
   }
 
 </script>
@@ -271,7 +278,7 @@ export default {
 }
 div.container-fluid {
   
-  margin-top: 5rem;
+  margin-top: 2rem;
   background-color: whitesmoke;
   padding: 1rem;
 }
