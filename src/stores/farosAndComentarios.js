@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import axios from "axios"
 import Vuex from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 Vue.use(Vuex)
 
@@ -23,14 +24,8 @@ const store = new Vuex.Store({
       console.log('setComentarios' + state.comentarios);
 
     },
-    pushComentario(state,comentario) {
-      try {
-        state.faros.push(comentario)
-      } catch (error) {
-        console.log(error);
-      }
-
-
+    getNuevosComentarios() {
+      return state.comentarios
     }
     // setIconSizeLarge (state,idFaro) {
       
@@ -73,9 +68,7 @@ const store = new Vuex.Store({
 
       try {
 
-        const com = await axios.put('http://localhost:3000/comentarios/'+data.comentarios.idFaro, data )
-
-        context.commit('pushComentario', data)
+        await axios.put('http://localhost:3000/comentarios/'+data.comentarios.idFaro, data )
 
       } catch (error) {
         console.log('putComentario failed' + error);
@@ -89,7 +82,8 @@ const store = new Vuex.Store({
     comentarios: state => {
       return state.comentarios
     }
-  }
+  },
+  plugins: [createPersistedState()]
 })
 
 export default store

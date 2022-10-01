@@ -5,7 +5,10 @@ import App from './App.vue'
 import router from './router'
 import store  from "./stores/farosAndComentarios.js"
 import './assets/main.css'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import LazyComponent from 'v-lazy-component'
+import { BootstrapVue, IconsPlugin, ToastPlugin } from 'bootstrap-vue'
+
+
 
 
 import { LMap, LTileLayer, LMarker, LTooltip } from 'vue2-leaflet';
@@ -21,10 +24,14 @@ export const eventBus = new Vue();
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
+Vue.use(ToastPlugin)
+
+Vue.use(LazyComponent)
 
 new Vue({
+  
   router,
-  store,  
+  store,
   render: (h) => h(App)
 }).$mount('#app')
 

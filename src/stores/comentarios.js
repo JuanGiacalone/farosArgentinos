@@ -12,7 +12,8 @@ export default new Vuex.Store({
   },
   mutations: {
     setComentarios (state, comentarios) {
-      state.comentarios = comentarios
+      state.comentarios = comentarios;
+
       console.log('setComentarios' + state.comentarios);
 
     },
@@ -20,8 +21,8 @@ export default new Vuex.Store({
   actions: {
     async getComentarios (context, idFaro) {
       const  res  = await axios.get('http://localhost:3000/comentarios/'+ idFaro )
-      console.log(res);
-      context.commit('setComentarios', res.data)
+
+      context.commit('setComentarios', res.data.comentarios)
 
     },
 

@@ -1,5 +1,7 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+
+
 </script>
 
 <template>
@@ -10,15 +12,17 @@ import HelloWorld from './components/HelloWorld.vue'
             <div class="greetings">
               <h1 class="green">FarosArgentinos</h1>
             </div>
+            
             <router-link to="/">Inicio</router-link>
             <router-link to="/about">Sobre el proyecto</router-link>
             <router-link to="/contact">Contacto</router-link>
            </div>
         </nav>
-      
     </header>
+    <keep-alive>
+      <router-view />
+    </keep-alive>
 
-    <router-view />
   </div>
 </template>
 
@@ -34,6 +38,7 @@ header {
 }
 
 nav {
+  margin-bottom: 5rem;
   width: 100%;
   font-size: 12px;
   text-align: center;
@@ -67,20 +72,18 @@ nav a:first-of-type {
   }
 
 
-
-
   nav {
     text-align: left;
     font-size: 1rem;
-    padding: 1.7rem 0;
+   /* padding: 1.7rem 0;*/
     margin-top: 0rem;
   
   }
 }
 h1 {
   font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
+  font-size: 2.0rem;
+  top: 0px;
 }
 
 h3 {
