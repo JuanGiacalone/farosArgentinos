@@ -3,7 +3,7 @@
 .b-sidebar-body{
     
     overflow-y: scroll;
-    height: 50vh;
+    height: fit-content;
 }
 .v-lazy-component.v-lazy-component--loading {
     filter: blur(20px);
