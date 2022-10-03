@@ -3,46 +3,87 @@
 
    <div class="container-fluid">
 
-    <b-button v-b-toggle.sidebar-variant >Ver Comentarios</b-button>
-        <div class="row">
-            <div class="col-3">
-                <!-- <div class="card faros-list" style="width: fit-content"  >
-                    <ul class="list-group list-group-flush"
-                    v-for="comentario, index in comentarios.comentarios" :key=index>
 
-                        <li class="list-group-item"> {{comentario.fecha}} {{comentario.nombre}} {{comentario.email}} {{comentario.cuerpo}} </li> 
+   
 
-                    </ul>
-                </div>        -->
-                
-            </div>
+        <div class="row" style="margin-top:0.3rem">
+
             
-            <div class="col-3">
-                <div class="card faros-list" style="width: fit-content">
-                    
+                <div class="col-3" style="text-align: center" >
+                    <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:1rem">
+                        <b-card-text>
+                            {{faro.descripcion}}
+                        </b-card-text>
+                        <template #footer>
+                            Imagen provista por <a :href=faro.urlImagen >hidro.gov.ar</a>
+                            
+                        </template>
+                        <template>
+                            
+                        </template>
+
+                            <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem">{{this.accesibilidad}}</b-button>
+                            <b-button pill :variant="accesibilidadPagoVariant()" style="margin:0.4rem">{{this.accesibilidadPago}}</b-button>
+
+                    </b-card>
                     
                 </div>
-            </div>
+
+                
+                <div class="col-8" style="text-align: center">
+                    <b-embed
+                    type="iframe"
+                    aspect="4by3"
+                    :src=faro.urlVista
+                    allowfullscreen
+                    width="800" height="450"
+                  ></b-embed>
+
+                        <b-card style="overflow: hidden;"  >
+
+                        <b-tabs pills card vertical>
+                            <b-tab title="Historia" active><b-card-text>{{faro.historia}}</b-card-text></b-tab>
+                            <b-tab title="Caracteristicas"><b-card-text>{{faro.caracteristicas}}</b-card-text></b-tab>
+                            <b-tab title="Información Turistica"><b-card-text>{{faro.turismo}}</b-card-text></b-tab>
+                            <b-tab title="Ubicación"><b-card-text>{{faro.ubicacion}}</b-card-text></b-tab>
+
+                        </b-tabs>
+                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.3rem">Ver Comentarios</b-button>
+                        </b-card>
+
+
+
+                    <!-- <div class="card text-center" style="padding: 1rem" >
+                        <iframe :src=faro.urlVista width="500" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div> -->
+                    
+                </div>
+            
 
         </div>
+
+
     </div>
 
     <b-container>
-        <b-alert
-        :show="dismissCountDown"
-        variant="success"
-        @dismissed="dismissCountDown=0"
-        @dismiss-count-down="countDownChanged"
-        style="width:fit-content; height:fit-content"
-      >    <h4 class="dark">Comentario agregado con exito!</h4>
-            <p>Cerrando en: {{ dismissCountDown }}</p>
-    </b-alert>
+            <b-alert
+                :show="dismissCountDown"
+                variant="success"
+                @dismissed="dismissCountDown=0"
+                @dismiss-count-down="countDownChanged"
+                style="width:fit-content; height:fit-content">
+                <h4 class="dark">Comentario agregado con exito!</h4>
+                <p>Cerrando en: {{ dismissCountDown }}</p>
+            </b-alert>
 
-            <b-sidebar no-slide  id="sidebar-variant"  no-header text-variant="light" shadow >
+            <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow >
 
-            <div>
-                <b-form @submit="onSubmit" @reset="onReset">
+
                     <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin-top:2rem; margin-left:2rem;" shadow>Cerrar comentarios</b-button>
+                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin-top:2rem; margin-left:2rem;" shadow>Crear comentario</b-button>
+            <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content">
+
+                <b-form @submit="onSubmit" @reset="onReset">
                     <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:2rem; margin-left:2rem;">Enviar</b-button>
                     <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:2rem; margin-left:2rem;">Limpiar</b-button>
                     <b-form-group
@@ -57,6 +98,7 @@
                             placeholder="Ingresa tu email"
                             ref="emailInput"
                             required
+                            autofocus
                         > </b-form-input>
                     </b-form-group>
                     <b-form-group id="input-group-2" style="margin-left: 2rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
@@ -83,16 +125,15 @@
                       </b-form-group>
 
                 </b-form>
+            </b-sidebar>
 
             
-                
-            </div>
-            
-            <lazy-component wrapper-tag="section">
+
                 <b-list-group 
-                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index>
+                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem">
                     <b-list-group-item href="#" class="flex-column align-items-start" style="width:95%; margin-left:2rem; margin-top:0.3rem">
-                      <div class="d-flex w-30 justify-content-between">
+                        <div class="d-flex w-30 justify-content-between">
+                       
                         <h5 class="mb-1">{{comentario.nombre}}</h5>
                         <small>{{comentario.fecha}}</small>
                       </div>
@@ -104,9 +145,8 @@
                       <small>{{comentario.email}}</small>
                     </b-list-group-item>
                 </b-list-group>
-                <!-- Optional loading indicator -->
-                <span slot="placeholder">Loading..</span>
-              </lazy-component>
+
+
            
         </b-sidebar>
     </b-container>
@@ -134,13 +174,15 @@ import { mapGetters } from "vuex";
             this.$router.push('/').catch(()=>{});
         } else {
             this.$store.dispatch("getComentarios", this.faro.idFaro)
+            this.$store.dispatch("putImpresion", this.faro.idFaro)
             this.show = true
             this.form.comentarios.idFaro = this.faro.idFaro
+            this.accesibilidadPagoVariant()
+            this.accesibilidadVariant()
         }
-    },
-    deactivated() {
 
     },
+
     created() {
 
         // Si se refresca, se devuelve al user al inicio
@@ -155,6 +197,8 @@ import { mapGetters } from "vuex";
         return {
             dismissSecs: 5,
             dismissCountDown: 0,
+            accesibilidad:'',
+            accesibilidadPago:'',
             show:true,
             form: {
                 comentarios:{
@@ -177,12 +221,31 @@ import { mapGetters } from "vuex";
     },
     methods: {
 
+        accesibilidadPagoVariant(){
+            if (this.faro.accesoPago) {
+                this.accesibilidadPago = 'Acceso pago'
+                return 'warning'
+            }  else {
+                this.accesibilidadPago = 'Acceso gratuito' 
+                return'success' 
+            } 
+        },
+        accesibilidadVariant() {
+            if (this.faro.accesible) {
+                this.accesibilidad = 'Acceso habilitado'
+                return'success' 
+                
+            }  else {
+                this.accesibilidad = 'Acceso restringido' 
+                return 'warning'
+            }
+        },
         countDownChanged(dismissCountDown) {
-        this.dismissCountDown = dismissCountDown
-      },
-      showAlert() {
-        this.dismissCountDown = this.dismissSecs
-      },
+            this.dismissCountDown = dismissCountDown
+        },
+        showAlert() {
+            this.dismissCountDown = this.dismissSecs
+        },
 
         onSubmit(event) {
            event.preventDefault()
@@ -239,7 +302,8 @@ import { mapGetters } from "vuex";
         padding: 1rem;
     }
     div.container-fluid {
-  
+        
+        color: black;
         margin-top: 2rem;
         background-color: whitesmoke;
         padding: 1rem;

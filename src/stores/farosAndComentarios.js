@@ -11,12 +11,18 @@ const store = new Vuex.Store({
   namespaced: true,
   state: {
     faros: [],
-    comentarios: []  
+    comentarios: [],
+    farosTop5: []  
   },
   mutations: {
     setFaros (state, faros) {
       state.faros = faros
       console.log('setFaros' + state.faros);
+
+    },
+    setFarosTop5 (state, faros) {
+      state.farosTop5 = faros
+      console.log('setFarosTop5' + state.farosTop5);
 
     },
     setComentarios (state, comentarios) {
@@ -52,8 +58,15 @@ const store = new Vuex.Store({
       } catch (error) {
         console.log('getFaros failed' + error);
       }
+    },
+    async getFarosTop5 (context) {
+      try {
+        const res = await axios.get('http://localhost:3000/faros/top')
+        context.commit('setFarosTop5', res.data)
 
-
+      } catch (error) {
+        console.log('get FarosTop5 failed' + error);
+      }
     },
     async getComentarios (context, idFaro) {
       try {
@@ -74,6 +87,15 @@ const store = new Vuex.Store({
         console.log('putComentario failed' + error);
       }
     },
+    async putImpresion(context,idFaro) {
+      try {
+
+        await axios.put('http://localhost:3000/faros/'+ idFaro)
+
+      } catch (error) {
+        console.log('putImpresion failed' + error);
+      }
+    } 
   },
   getters: {
     faros: state => {
@@ -81,6 +103,9 @@ const store = new Vuex.Store({
     },
     comentarios: state => {
       return state.comentarios
+    },
+    farosTop5: state => {
+      return state.farosTop5
     }
   },
   plugins: [createPersistedState()]

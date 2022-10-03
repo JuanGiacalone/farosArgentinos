@@ -20,7 +20,9 @@ import HelloWorld from './components/HelloWorld.vue'
         </nav>
     </header>
     <keep-alive>
-      <router-view />
+
+        <router-view />
+
     </keep-alive>
 
   </div>
