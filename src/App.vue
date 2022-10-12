@@ -1,5 +1,7 @@
 <script setup>
 import HelloWorld from './components/HelloWorld.vue'
+
+
 </script>
 
 <template>
@@ -7,16 +9,22 @@ import HelloWorld from './components/HelloWorld.vue'
     <header>
         <nav class="navbar navbar-expand-sm fixed-top bg bg-dark navbar-dark">
           <div class="container">
-            <HelloWorld msg="You did it!" />
-            <router-link to="/">Home</router-link>
-            <router-link to="/about">About</router-link>
-            <router-link to="/farosargentinos">Faros Argentinos</router-link>
+            <div class="greetings">
+              <h1 class="green">FarosArgentinos</h1>
+            </div>
+            
+            <router-link to="/">Inicio</router-link>
+            <router-link to="/about">Sobre el proyecto</router-link>
+            <router-link to="/contact">Contacto</router-link>
            </div>
         </nav>
-      
     </header>
+    <keep-alive>
 
-    <router-view />
+        <router-view />
+
+    </keep-alive>
+
   </div>
 </template>
 
@@ -32,6 +40,7 @@ header {
 }
 
 nav {
+  margin-bottom: 5rem;
   width: 100%;
   font-size: 12px;
   text-align: center;
@@ -64,21 +73,35 @@ nav a:first-of-type {
     padding-right: calc(var(--section-gap) / 2);
   }
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
 
   nav {
     text-align: left;
     font-size: 1rem;
-    padding: 1.5rem 0;
+   /* padding: 1.7rem 0;*/
     margin-top: 0rem;
+  
+  }
+}
+h1 {
+  font-weight: 500;
+  font-size: 2.0rem;
+  top: 0px;
+}
+
+h3 {
+  font-size: 1.2rem;
+}
+
+.greetings h1,
+.greetings h3 {
+  text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .greetings h1,
+  .greetings h3 {
+    display: block;
+    text-align: left;
   }
 }
 </style>
