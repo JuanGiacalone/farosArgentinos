@@ -2,8 +2,15 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ListaAndMapa from '../components/ListaAndMapa.vue'
+import FaroAndComments from "../components/FaroAndComments.vue"
+
+import { PiniaVuePlugin } from 'pinia'
+Vue.use(PiniaVuePlugin)
 
 Vue.use(VueRouter)
+
+ // dynamic imports
+ const FaroAndCommentsLazy = () => import('../components/FaroAndComments.vue');
 
 const router = new VueRouter({
   mode: 'history',
@@ -12,15 +19,17 @@ const router = new VueRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView
+      component: ListaAndMapa
     },
     {
-      path: '/about',
-      name: 'about',
+      path: '/faro/',
+      name: 'faro',
+      component: FaroAndCommentsLazy,
+      props: true,
+
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
     },
     {
       path: '/farosargentinos',
@@ -29,5 +38,6 @@ const router = new VueRouter({
     }
   ]
 })
+
 
 export default router
