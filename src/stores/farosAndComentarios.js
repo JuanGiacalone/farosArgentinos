@@ -5,6 +5,10 @@ import axios from "axios"
 import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
+const ENDPOINT = import.meta.env.VITE_FAROSARGENTINOS_ENDPOINT;
+const ENDPOINT_FAROS = ENDPOINT + 'faros/'
+const ENDPOINT_COMENTARIOS = ENDPOINT + 'comentarios/'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -52,7 +56,7 @@ const store = new Vuex.Store({
   actions: {
     async getFaros (context) {
       try {
-        const  res  = await axios.get('http://localhost:3000/faros')
+        const  res  = await axios.get( ENDPOINT_FAROS )
 
         context.commit('setFaros', res.data)
       } catch (error) {
@@ -61,7 +65,7 @@ const store = new Vuex.Store({
     },
     async getFarosTop5 (context) {
       try {
-        const res = await axios.get('http://localhost:3000/faros/top')
+          const res = await axios.get( ENDPOINT_FAROS + 'top')
         context.commit('setFarosTop5', res.data)
 
       } catch (error) {
@@ -70,7 +74,7 @@ const store = new Vuex.Store({
     },
     async getComentarios (context, idFaro) {
       try {
-        const  res  = await axios.get('http://localhost:3000/comentarios/'+ idFaro )
+          const  res  = await axios.get( ENDPOINT_COMENTARIOS + idFaro )
 
         context.commit('setComentarios', res.data)
       } catch (error) {
@@ -81,19 +85,19 @@ const store = new Vuex.Store({
 
       try {
 
-        await axios.put('http://localhost:3000/comentarios/'+data.comentarios.idFaro, data )
+          await axios.put( ENDPOINT_COMENTARIOS + data.comentarios.idFaro, data )
 
       } catch (error) {
-        console.log('putComentario failed' + error);
+        console.log('putComentario failed ' + error);
       }
     },
     async putImpresion(context,idFaro) {
       try {
 
-        await axios.put('http://localhost:3000/faros/'+ idFaro)
+        await axios.put( ENDPOINT_FAROS + idFaro)
 
       } catch (error) {
-        console.log('putImpresion failed' + error);
+        console.log('putImpresion failed ' + error);
       }
     } 
   },
