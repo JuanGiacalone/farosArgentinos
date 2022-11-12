@@ -48,14 +48,9 @@
                             <b-tab title="Ubicación"><b-card-text>{{faro.ubicacion}}</b-card-text></b-tab>
 
                         </b-tabs>
-                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.3rem">Ver Comentarios</b-button>
+                       
                         </b-card>
-
-
-
-                    <!-- <div class="card text-center" style="padding: 1rem" >
-                        <iframe :src=faro.urlVista width="500" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                    </div> -->
+                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:1rem; color:white">Ver Comentarios</b-button>
                     
                 </div>
             
@@ -79,13 +74,13 @@
             <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow >
 
 
-                    <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin-top:2rem; margin-left:2rem;" shadow>Cerrar comentarios</b-button>
-                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin-top:2rem; margin-left:2rem;" shadow>Crear comentario</b-button>
+                    <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem; margin-left:2rem" shadow>Cerrar comentarios</b-button>
+                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow>Crear comentario</b-button>
             <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content">
 
                 <b-form @submit="onSubmit" @reset="onReset">
-                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:2rem; margin-left:2rem;">Enviar</b-button>
-                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:2rem; margin-left:2rem;">Limpiar</b-button>
+                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Enviar</b-button>
+                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Limpiar</b-button>
                     <b-form-group
                         id="input-group-1"
                         label-for="input-1"
