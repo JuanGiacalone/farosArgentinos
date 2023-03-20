@@ -13,7 +13,7 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   namespaced: true,
-  state: {
+  state: {  
     faros: [],
     comentarios: [],
     farosTop5: []  
