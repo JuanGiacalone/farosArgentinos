@@ -71,14 +71,14 @@
                 <p>Cerrando en: {{ dismissCountDown }}</p>
             </b-alert>
 
-            <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow >
+            <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow style="overflow-y: scroll;">
 
 
                     <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem; margin-left:2rem" shadow>Cerrar comentarios</b-button>
                     <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow>Crear comentario</b-button>
-            <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content">
+            <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content; overflow-y: hidden;">
 
-                <b-form @submit="onSubmit" @reset="onReset">
+                <b-form @submit="onSubmit" @reset="onReset" >
                     <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Enviar</b-button>
                     <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Limpiar</b-button>
                     <b-form-group
