@@ -8,17 +8,14 @@
       
       <div class="col-3 ">
 
-          <!-- Se bindean nuevamente los eventos externos a metodos locales -->
-          <!-- Se envian los faros Filtrados a la clase hija que se encarga de mostrarlos -->
-       <!-- <ListaFaros 
-       
-       @mouse-over-faro = "mouseOverFaro"
-       @mouse-left-faro = "mouseLeftFaro"
-       :faros = "farosFiltrados"/> -->
-
         <div class="input-group input-group mb-3" >
           <div>
-            <b-dropdown size="sm" id="dropdown-1" :text="searchFilter"  class="m-2 " >
+
+            <!-- searchFilter va a contener el nombre del filtro que se este usando, 
+            modificando asi el texto del boton que permite el dropdown -->
+            <b-dropdown size="sm" id="dropdown-1" :text="searchFilter"  class="m-2" >
+
+              <!-- filterSearch, toma el filtro a usar y si desabilita el input text o no (false lo deja habilitado)-->
               <b-dropdown-item  @click="filterSearch('Nombre',false)" > Nombre</b-dropdown-item>
               <b-dropdown-item  @click="filterSearch('Provincia',false)">Provincia</b-dropdown-item>
               <b-dropdown-divider></b-dropdown-divider>
@@ -28,83 +25,100 @@
               <b-dropdown-item @click="filterSearch('Acceso Pago',true)">Acceso Pago</b-dropdown-item>
             </b-dropdown>
           </div>
-                      <!-- Se bindea el input a una variable  -->
+                      <!-- Se bindea el input que se seleccione a la variable searchQuery  -->
+                      
           <input autofocus type="text" v-model="searchQuery" placeholder="Buscar..." class="form-control"  
           aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled" >
         </div>
+                                                    <!-- textInputDisabled (booleano) hace que se deshabilite el text input en caso de que
+                                                    el filtro sea de tipo Acceso... -->
+        <!-- input group -->
 
-       <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center; height: 87vh;"  >
+        <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center; height: 87vh;"  >
 
-        <ul class="list-group list-group-flush">
-          
-           <!--  Se bindean los eventos de html con metodos locales que reciben el indice afectado-->
-          <li
-              @mouseover="mouseOver(idFaro)" 
-              @mouseleave="mouseLeave(idFaro)"
-              v-for="faro, idFaro in farosFiltrados" :key="faro.idFaro"
-          class="list-group-item"
-          >   <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link> </li>
-        </ul>
-      </div>
-
-      </div>
-      <!-- col6 -->
-      <div class="col-7">
-        <!-- Se pasa el Array faros como prop -->
-       <!-- <MapaFaros :faros = "faros"/>  -->
-      <!-- <MapaFaros :faros = "farosFiltrados"/> -->
-      <div class="row map">
-        <div class="card faros-list" style="padding: 0.4rem; overflow-y: auto;">
-          <l-map
-            :zoom="zoom" 
-            :center="center">
-      
-            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-            <l-marker
-            
-            v-for="faro in farosFiltrados" :key="faro.idFaro"
-            :lat-lng="latLng(faro.coordenadas.coordinates[0], faro.coordenadas.coordinates[1] )"
-            :name="faro.nombre"
-            >
-            
-            <l-popup><router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></l-popup>
-              <l-icon
-      
-              :icon-size = iconSize
-              :icon-url = "icon"
-              >
+            <ul class="list-group list-group-flush">
               
-              </l-icon>
-
-              <l-tooltip>{{faro.nombre}}</l-tooltip>
-            </l-marker>
-          </l-map>
+                        <!-- Se muestra lo que se encuentra en la lista de farosFiltrados, si no se filtra,
+                        contiene a todos los faros...  -->
+              <li  
+                  v-for="faro, idFaro in farosFiltrados" :key="faro.idFaro"
+              class="list-group-item"
+              >   <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link> </li>
+            </ul>
         </div>
+        <!-- card faros list 3 -->
       </div>
-      <!-- col6 -->
+      <!-- col 3 -->
 
-    </div>
+      <div class="col-7">
+
+          <div class="row map">
+            <div class="card faros-list" style="padding: 0.4rem; overflow-y: auto;">
+
+              <!-- Componente externo LeafletVue, comienza configurando el zoom y las coordenas de inicio -->
+              <l-map
+                :zoom="zoom" 
+                :center="center">
+
+                <!-- Seteo de propiedades de la cartografia, url y creditos -->
+                <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+
+                <!-- Se genera un marcador por cada faro en farosFiltrados -->
+                <l-marker
+              
+                v-for="faro in farosFiltrados" :key="faro.idFaro"
+                :lat-lng="latLng(faro.coordenadas.coordinates[0], faro.coordenadas.coordinates[1] )"
+                :name="faro.nombre"
+                >
+                <!-- Para cada marcador se configura un popUp con las props del faro  -->
+                <l-popup><router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></l-popup>
+                
+                <!-- Para cada faro un icono con dichas variables -->
+                <l-icon
+                  :icon-size = iconSize
+                  :icon-url = "icon"
+                  ></l-icon>
+
+                  <!-- Para cada marcador, un tooltip con el nombre -->
+                  <l-tooltip>{{faro.nombre}}</l-tooltip>
+
+                </l-marker>
+
+              </l-map>
+            </div>
+            <!-- card faros list -->
+            
+          </div>
+        <!-- row map -->
+
+      </div>
+    <!-- col 7 -->
     <div class="col-2">
+
       <div class="card faros-list" style="width: auto; height: fit-content; overflow-y: auto; text-align: center; padding: 0.4rem;"  >
         <h6    style="color:black; text-align: center;">Top 5 Faros</h6>
         <ul class="list-group list-group-flush">
     
-           <!--  Se bindean los eventos de html con metodos locales que reciben el indice afectado-->
+           <!--  Se muestra la lista con el top5 faros provenientes del store, como todas las query-->
           <li
-              @mouseover="mouseOver(idFaro)" 
-              @mouseleave="mouseLeave(idFaro)"
               v-for="faro, idFaro in farosTop5" :key="faro.idFaro"
           class="list-group-item"
-          >   <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></li>
+          >
+          <!-- Para cada uno se arma un router link que redirige a la vista con los datos de faro, que van como parametro -->    
+          <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></li>
         </ul>
       </div>
-    </div>
-  </div>
-    <!-- row -->
+      <!-- card faros list --> 
 
-    
+    </div>
+    <!-- col-2 --> 
+
   </div>
-  <!-- container -->
+    <!-- row -->   
+
+</div>
+<!-- container -->
+
 </KeepAlive>
 </template>
 
@@ -118,7 +132,7 @@ import iconoFarito from '../assets/faro.svg'
 import {eventBus} from "../main";
 import { mapGetters } from "vuex";
 export default {
-    emits: ['mouse-over-faro', 'mouse-left-faro'],
+
     name: "ListaAndMapa",
     components: { ListaFaros, MapaFaros, LMap, LTileLayer, LMarker, LIcon, LPopup },
     
@@ -127,8 +141,6 @@ export default {
             
             textInputDisabled: false,
             key:0,
-            normalIcon: [25,25],
-            largeIcon: [50,50],
             searchQuery: '',
             searchFilter: 'Nombre',
             zoom:5,
@@ -143,43 +155,19 @@ export default {
             
         };
     },
-
+    // Metodo que realiza las llamadas elementales antes que se cree la vista
     beforeCreate() {
       this.$store.dispatch('getFaros')
       this.$store.dispatch('getFarosTop5')
     },
 
     methods: {
+      // Metodo q devulve un objeto de tipo L (LeafletVue) con las lat y lng enviadas
         latLng: function (lat, lng) {
         return L.latLng(lat,lng)
       },
 
-      // En estos metodos, cuando el user hace un Over o Left, se modifica la nueva propiedad que fue
-      // mapeada.
-      mouseOverFaro: function (index) {
-        // let faro = this.faros.find(faro.idFaro === index
-       
-        //this.$store.commit('setIconSizeLarge',index);
-        this.$root.$emit('mouse-over-faro',index)
-        //   console.log(faro.idFaro);
-        //   faro.iconSize = this.largeIcon;
-      },
-      mouseLeftFaro: function (index) {
-        // let faro = this.faros.find(faro.idFaro === index)
-        //   faro.iconSize = this.normalIcon;
-        // this.faros[index].iconSize = this.normalIcon;
-        //this.$store.commit('setIconSizeNormal',index);
-        this.$root.$emit('mouse-left-faro',index)
-      },
-
-      mouseOver: function (index) {
-        this.$emit('mouse-over-faro',index)
-        eventBus.$emit('mouse-over-faro',index)
-      },
-      mouseLeave: function (index) {
-        this.$emit('mouse-left-faro',index)
-        eventBus.$emit('mouse-left-faro',index)
-      },
+      // Maneja el estado del input y el filtro que se encuentra seleccionado.
       filterSearch: function (filter,disableInput) {
         this.searchFilter = filter
         this.textInputDisabled = disableInput
@@ -189,23 +177,18 @@ export default {
     // Los metodos dentro de computed permiten modificar y manipular valores que unicamente ya existen en el scope
     computed: { 
 
+      // to comment
       ...mapGetters(['faros']),
       ...mapGetters(['farosTop5']),
       farosFiltrados : function () {
           
         // Devuelve el array filtrado segun el filtro utilizado
+        // El this.faros hace referencia a la lista con todos los faros que obtuvo el geter invocado en ...mapGetters
+      
          return this.faros.filter((faro) => {
           let campo = this.searchFilter.toLowerCase();
           let faros;
 
-          // if( campo == 'nombre')
-          //   faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
-
-          // else if (campo == 'provincia') {
-          //   console.log(campo);
-          //   faros = faro.provincia.toLowerCase().match(this.searchQuery.toLowerCase())
-
-          // }
           switch (campo) {
             case 'nombre':
               faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
@@ -232,7 +215,7 @@ export default {
               faros = faro.nombre.toLowerCase().match(this.searchQuery.toLowerCase())
           }
 
-
+          /// Una vez terminado el filtrado devulve los faros filtrados
           return faros
 
          })
@@ -259,7 +242,7 @@ export default {
     background-color: whitesmoke;
     li {
       &:hover {
-        background-color: whitesmoke;
+        background-color: grey;
       
       }
     }
