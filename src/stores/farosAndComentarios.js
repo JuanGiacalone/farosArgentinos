@@ -20,7 +20,6 @@ const store = new Vuex.Store({
     comentarios: [],
     farosTop5: []  
   },
-  
   // Se definen los cambios que pueden tener los estados
   mutations: {
     setFaros (state, faros) {
