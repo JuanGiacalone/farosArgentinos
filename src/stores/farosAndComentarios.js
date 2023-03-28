@@ -13,23 +13,14 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   namespaced: true,
-<<<<<<< HEAD
 
   // Se definen las listas a manejar
   state: {
-=======
-<<<<<<< HEAD
-
-  // Se definen las listas a manejar
-  state: {
-=======
-  state: {  
->>>>>>> c3d0e64375f05836db17a5e6c44903e20386e51d
->>>>>>> ec23465270409c893c30e7577be4554c9d0a8378
     faros: [],
     comentarios: [],
     farosTop5: []  
   },
+  
   // Se definen los cambios que pueden tener los estados
   mutations: {
     setFaros (state, faros) {
