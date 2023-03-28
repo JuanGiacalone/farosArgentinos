@@ -9,10 +9,12 @@ Vue.use(PiniaVuePlugin)
 
 Vue.use(VueRouter)
 
- // dynamic imports
+ // importes dinamicos
  const FaroAndCommentsLazy = () => import('../components/FaroAndComments.vue');
 
 const router = new VueRouter({
+
+  // more comments here
   mode: 'history',
   base: import.meta.env.BASE_URL,
   routes: [
@@ -27,9 +29,6 @@ const router = new VueRouter({
       component: FaroAndCommentsLazy,
       props: true,
 
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
     },
     {
       path: '/farosargentinos',

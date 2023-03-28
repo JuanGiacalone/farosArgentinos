@@ -13,11 +13,14 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   namespaced: true,
+
+  // Se definen las listas a manejar
   state: {
     faros: [],
     comentarios: [],
     farosTop5: []  
   },
+  // Se definen los cambios que pueden tener los estados
   mutations: {
     setFaros (state, faros) {
       state.faros = faros
@@ -34,24 +37,11 @@ const store = new Vuex.Store({
       console.log('setComentarios' + state.comentarios);
 
     },
+    
     getNuevosComentarios() {
       return state.comentarios
     }
-    // setIconSizeLarge (state,idFaro) {
-      
-    //   let faro = state.faros.find( faro => faro.idFaro == idFaro )
-    //   faro.iconSize = [50,50]
-    //   console.log(faro.iconSize);
-    //   console.log('seticonsizeLarge'+ state + idFaro);
-    // },
-    // setIconSizeNormal (state,idFaro) {
-      
-    //   let faro = state.faros.find( faro => faro.idFaro == idFaro )
-    //   console.log(faro.iconSize);
-    //   faro.iconSize = [25,25]
-    //   console.log(faro);
-    //   console.log('seticonsizeNormal'+ state + idFaro);
-    // }
+
   },
   actions: {
     async getFaros (context) {
@@ -101,6 +91,8 @@ const store = new Vuex.Store({
       }
     } 
   },
+
+  // Definicion de los getters disponibles
   getters: {
     faros: state => {
       return state.faros
@@ -116,28 +108,3 @@ const store = new Vuex.Store({
 })
 
 export default store
-
-
-// export const useFaroStore = defineStore("faro", {
-//     state: () => ({
-//         faros: [],
-//     }),
-//     getters: {
-//       getFaros(state){
-//           return state.faros
-//         }
-//     },
-//     actions: {
-//       async fetchFaros() {
-//         try {
-//           const data = await axios.get('http://localhost:3000/faros')
-//             // console.log(process.env.FAROS_ENDPOINT);
-//             this.faros = data.data
-//           }
-//           catch (error) {
-//             alert(error)
-//             console.log(error)
-//         }
-//       }
-//     },
-// })
