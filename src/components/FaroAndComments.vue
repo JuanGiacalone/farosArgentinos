@@ -3,12 +3,7 @@
 
    <div class="container-fluid">
 
-
-   
-
         <div class="row" style="margin-top:0.3rem">
-
-            
                 <div class="col-3" style="text-align: center" >
                     <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:1rem">
                         <b-card-text>
@@ -19,134 +14,165 @@
                             
                         </template>
                         <template>
-                            
                         </template>
 
                             <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem">{{this.accesibilidad}}</b-button>
-                            <b-button pill :variant="accesibilidadPagoVariant()" style="margin:0.4rem">{{this.accesibilidadPago}}</b-button>
+                            <b-button pill :variant="accesibilidadPagoVariant()" style="margin:0.4rem">{{this.accesibilidadPago}}</b-button>   
+                    </b-card>
+                    <b-card style="width:100%; text-align:center" >
+                        <b-card-text>
+                            <router-link to="/about">Terminos y condiciones</router-link>
+                        </b-card-text>
 
                     </b-card>
+
                     
                 </div>
-
+                
                 
                 <div class="col-8" style="text-align: center">
-                    <b-embed
-                    type="iframe"
-                    aspect="4by3"
-                    :src=faro.urlVista
-                    allowfullscreen
-                    width="800" height="450"
-                  ></b-embed>
 
+                    <div class="row" style="text-align: left">
+                        <div class="col-6" style="text-align: left">
+                            <b-embed
+                            type="iframe"
+                            :src=faro.urlVista
+                            allowfullscreen
+                            width="1000" height="500"
+                                
+                            ></b-embed>
+
+                        </div>
+                        <div class="col-3"></div>
+
+                        <div class="col-3">
+                            <b-card style="width: fit-content; text-align:center" >
+                                <b-card-text>
+                                    Auspicia este faro
+                                </b-card-text>
+                                <b-embed
+                                type="iframe"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3142.936863538067!2d-57.57094852405874!3d-38.0252513461546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584de8e276cd16b%3A0x15baf9e20b3b274a!2sYaInsumos!5e0!3m2!1ses-419!2sar!4v1683743027922!5m2!1ses-419!2sar" 
+                                allowfullscreen
+                                width="400" height="400"
+                                    
+                                ></b-embed>    
+
+                            </b-card>
+                            
+
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:1vh">
                         <b-card style="overflow: hidden;"  >
 
-                        <b-tabs pills card vertical>
-                            <b-tab title="Historia" active><b-card-text>{{faro.historia}}</b-card-text></b-tab>
-                            <b-tab title="Caracteristicas"><b-card-text>{{faro.caracteristicas}}</b-card-text></b-tab>
-                            <b-tab title="Información Turistica"><b-card-text>{{faro.turismo}}</b-card-text></b-tab>
-                            <b-tab title="Ubicación"><b-card-text>{{faro.ubicacion}}</b-card-text></b-tab>
+                            <b-tabs pills card vertical>
+                                <b-tab title="Historia" active><b-card-text>{{faro.historia}}</b-card-text></b-tab>
+                                <b-tab title="Caracteristicas"><b-card-text>{{faro.caracteristicas}}</b-card-text></b-tab>
+                                <b-tab title="Información Turistica"><b-card-text>{{faro.turismo}}</b-card-text></b-tab>
+                                <b-tab title="Ubicación"><b-card-text>{{faro.ubicacion}}</b-card-text></b-tab>
 
-                        </b-tabs>
-                       
+                            </b-tabs>
+                        
                         </b-card>
+                        
                         <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:1rem; color:white">Ver Comentarios</b-button>
-                    
-                </div>
+
+                        <b-container>
+                            <b-alert
+                                :show="dismissCountDown"
+                                variant="success"
+                                @dismissed="dismissCountDown=0"
+                                @dismiss-count-down="countDownChanged"
+                                style="width:fit-content; height:fit-content">
+                                <h4 class="dark">Comentario agregado con exito!</h4>
+                                <p>Cerrando en: {{ dismissCountDown }}</p>
+                            </b-alert>
             
+                            <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow style="overflow-y: scroll;">
+            
+            
+                                    <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem; margin-left:2rem" shadow>Cerrar comentarios</b-button>
+                                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow>Crear comentario</b-button>
+                            <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content; overflow-y: hidden;">
+            
+                                <b-form @submit="onSubmit" @reset="onReset" >
+                                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Enviar</b-button>
+                                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Limpiar</b-button>
+                                    <b-form-group
+                                        id="input-group-1"
+                                        label-for="input-1"
+                                        description="Tu email sera visualizado con tu comentario"
+                                        style="margin-left: 2rem; width:75%; margin-top:1rem">
+                                        <b-form-input
+                                            id="input-1"
+                                            v-model="form.comentarios.email"
+                                            type="email"
+                                            placeholder="Ingresa tu email"
+                                            ref="emailInput"
+                                            required
+                                            autofocus
+                                        > </b-form-input>
+                                    </b-form-group>
+                                    <b-form-group id="input-group-2" style="margin-left: 2rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
+                                        <b-form-input
+                                        id="input-2"
+                                        v-model="form.comentarios.nombre"
+                                        placeholder="Ingresa tu nombre"
+            
+                                        required
+                                        ></b-form-input>
+                                    </b-form-group>
+                                    <b-form-group id="input-group-3 ">
+            
+                                                <b-form-textarea
+                                                style="width:75%; resize:auto; margin-left: 2rem ; margin-bottom: 0.5rem"
+                                                id="textarea"
+                                                v-model="form.comentarios.cuerpo"
+                                                placeholder="Ingresa tu comentario..."
+                                                rows="3"
+                                                max-rows="6"
+                                                required
+                                            ></b-form-textarea>
+                            
+                                    </b-form-group>
+            
+                                </b-form>
+                            </b-sidebar>
+            
+                                <b-list-group 
+                                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem; text-align:left">
+                                    <b-list-group-item href="#" class="flex-column align-items-start" style="width:95%; margin-left:2rem; margin-top:0.3rem">
+                                        <div class="d-flex w-30 justify-content-between">
+                                    
+                                        <h5 class="mb-1">{{comentario.nombre}}</h5>
+                                        <small>{{comentario.fecha}}</small>
+                                    </div>
+                                
+                                    <p class="mb-1" style="word-wrap:break-word">
+                                        {{comentario.cuerpo}}
+                                    </p>
+                                
+                                    <small>{{comentario.email}}</small>
+                                    </b-list-group-item>
+                                </b-list-group>
+            
+                        
+                        </b-sidebar>
+                    </b-container>
+            
+            
+
+                    </div>
+            </div>
+
+            
+
 
         </div>
-
-
-    </div>
-
-    <b-container>
-            <b-alert
-                :show="dismissCountDown"
-                variant="success"
-                @dismissed="dismissCountDown=0"
-                @dismiss-count-down="countDownChanged"
-                style="width:fit-content; height:fit-content">
-                <h4 class="dark">Comentario agregado con exito!</h4>
-                <p>Cerrando en: {{ dismissCountDown }}</p>
-            </b-alert>
-
-            <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow style="overflow-y: scroll;">
-
-
-                    <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem; margin-left:2rem" shadow>Cerrar comentarios</b-button>
-                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow>Crear comentario</b-button>
-            <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content; overflow-y: hidden;">
-
-                <b-form @submit="onSubmit" @reset="onReset" >
-                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Enviar</b-button>
-                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Limpiar</b-button>
-                    <b-form-group
-                        id="input-group-1"
-                        label-for="input-1"
-                        description="Tu email sera visualizado con tu comentario"
-                        style="margin-left: 2rem; width:75%; margin-top:1rem">
-                        <b-form-input
-                            id="input-1"
-                            v-model="form.comentarios.email"
-                            type="email"
-                            placeholder="Ingresa tu email"
-                            ref="emailInput"
-                            required
-                            autofocus
-                        > </b-form-input>
-                    </b-form-group>
-                    <b-form-group id="input-group-2" style="margin-left: 2rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
-                        <b-form-input
-                          id="input-2"
-                          v-model="form.comentarios.nombre"
-                          placeholder="Ingresa tu nombre"
-
-                          required
-                        ></b-form-input>
-                      </b-form-group>
-                      <b-form-group id="input-group-3 ">
-
-                                <b-form-textarea
-                                style="width:75%; resize:auto; margin-left: 2rem ; margin-bottom: 0.5rem"
-                                id="textarea"
-                                v-model="form.comentarios.cuerpo"
-                                placeholder="Ingresa tu comentario..."
-                                rows="3"
-                                max-rows="6"
-                                required
-                            ></b-form-textarea>
-              
-                      </b-form-group>
-
-                </b-form>
-            </b-sidebar>
-
-            
-
-                <b-list-group 
-                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem">
-                    <b-list-group-item href="#" class="flex-column align-items-start" style="width:95%; margin-left:2rem; margin-top:0.3rem">
-                        <div class="d-flex w-30 justify-content-between">
-                       
-                        <h5 class="mb-1">{{comentario.nombre}}</h5>
-                        <small>{{comentario.fecha}}</small>
-                      </div>
-                  
-                      <p class="mb-1" style="word-wrap:break-word">
-                        {{comentario.cuerpo}}
-                      </p>
-                  
-                      <small>{{comentario.email}}</small>
-                    </b-list-group-item>
-                </b-list-group>
-
-
            
-        </b-sidebar>
-    </b-container>
-
-
+    </div>
    
 </div>
 </template>

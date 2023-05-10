@@ -1,5 +1,5 @@
 <script setup>
-import WelcomeItem from './WelcomeItem.vue'
+// import WelcomeItem from './aWelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import ToolingIcon from './icons/IconTooling.vue'
 import EcosystemIcon from './icons/IconEcosystem.vue'
@@ -9,7 +9,7 @@ import SupportIcon from './icons/IconSupport.vue'
 
 <template>
   <div>
-    <WelcomeItem>
+    <!-- <WelcomeItem>
       <template #icon>
         <DocumentationIcon />
       </template>
@@ -81,7 +81,7 @@ import SupportIcon from './icons/IconSupport.vue'
       As an independent project, Vue relies on community backing for its sustainability. You can
       help us by
       <a target="_blank" href="https://vuejs.org/sponsor/">becoming a sponsor</a>.
-    </WelcomeItem>
+    </WelcomeItem> -->
     <div>
       <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
         <b-dropdown-item>First Action</b-dropdown-item>
@@ -99,10 +99,10 @@ import SupportIcon from './icons/IconSupport.vue'
 
 
 <script>
-export default {
-  name: 'TheWelcome',
-  components: {
-    WelcomeItem
-  }
-}
+// export default {
+//   name: 'TheWelcome',
+//   components: {
+//     WelcomeItem
+//   }
+// }
 </script>
