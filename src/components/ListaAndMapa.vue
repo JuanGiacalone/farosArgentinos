@@ -13,8 +13,7 @@
 
             <!-- searchFilter va a contener el nombre del filtro que se este usando, 
             modificando asi el texto del boton que permite el dropdown -->
-            <b-dropdown size="sm" id="dropdown-1" :text="searchFilter"  class="m-2" >
-
+            <b-dropdown id="dropdown-1" :text="searchFilter"  class="m-2" >
               <!-- filterSearch, toma el filtro a usar y si desabilita el input text o no (false lo deja habilitado)-->
               <b-dropdown-item  @click="filterSearch('Nombre',false)" > Nombre</b-dropdown-item>
               <b-dropdown-item  @click="filterSearch('Provincia',false)">Provincia</b-dropdown-item>
@@ -34,14 +33,14 @@
                                                     el filtro sea de tipo Acceso... -->
         <!-- input group -->
 
-        <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center; height: 87vh;"  >
+        <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center;"  >
 
             <ul class="list-group list-group-flush">
               
                         <!-- Se muestra lo que se encuentra en la lista de farosFiltrados, si no se filtra,
                         contiene a todos los faros...  -->
               <li  
-                  v-for="faro, idFaro in farosFiltrados" :key="faro.idFaro"
+                  v-for="faro in farosFiltrados" :key="faro.idFaro"
               class="list-group-item"
               >   <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link> </li>
             </ul>
@@ -53,7 +52,7 @@
       <div class="col-7">
 
           <div class="row map">
-            <div class="card faros-list" style="padding: 0.4rem; overflow-y: auto;">
+            <div class="card" style="padding: 0.4rem; overflow-y: auto;">
 
               <!-- Componente externo LeafletVue, comienza configurando el zoom y las coordenas de inicio -->
               <l-map
@@ -101,7 +100,7 @@
     
            <!--  Se muestra la lista con el top5 faros provenientes del store, como todas las query-->
           <li
-              v-for="faro, idFaro in farosTop5" :key="faro.idFaro"
+              v-for="faro in farosTop5" :key="faro.idFaro"
           class="list-group-item"
           >
           <!-- Para cada uno se arma un router link que redirige a la vista con los datos de faro, que van como parametro -->    
@@ -124,17 +123,15 @@
 
 <script>
   
-import ListaFaros from './ListaFaros.vue'
-import MapaFaros from './MapaFaros.vue'
+
 import L from 'leaflet'
 import {  LMap, LTileLayer, LMarker, LIcon, LPopup} from 'vue2-leaflet'
 import iconoFarito from '../assets/faro.svg'
-import {eventBus} from "../main";
 import { mapGetters } from "vuex";
 export default {
 
     name: "ListaAndMapa",
-    components: { ListaFaros, MapaFaros, LMap, LTileLayer, LMarker, LIcon, LPopup },
+    components: { LMap, LTileLayer, LMarker, LIcon, LPopup },
     
     data() {
         return {
@@ -238,7 +235,7 @@ export default {
   }
   .faros-list {
     overflow-y: scroll;
-    height: 95vh;
+    height: fit-content;
     background-color: whitesmoke;
     li {
       &:hover {

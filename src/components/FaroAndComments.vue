@@ -5,7 +5,7 @@
 
         <div class="row" style="margin-top:0.3rem">
                 <div class="col-3" style="text-align: center" >
-                    <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:1rem">
+                    <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:0.5rem">
                         <b-card-text>
                             {{faro.descripcion}}
                         </b-card-text>
@@ -17,36 +17,33 @@
                         </template>
 
                             <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem">{{this.accesibilidad}}</b-button>
-                            <b-button pill :variant="accesibilidadPagoVariant()" style="margin:0.4rem">{{this.accesibilidadPago}}</b-button>   
-                    </b-card>
-                    <b-card style="width:100%; text-align:center" >
-                        <b-card-text>
-                            <router-link to="/about">Terminos y condiciones</router-link>
-                        </b-card-text>
-
+                            <b-button pill :variant="ingresoPagoVariant()" style="margin:0.4rem">{{this.ingresoPago}}</b-button>   
                     </b-card>
 
                     
                 </div>
                 
                 
-                <div class="col-8" style="text-align: center">
+                <div class="col-9" style="text-align: center;padding-right: 0px;">
 
-                    <div class="row" style="text-align: left">
-                        <div class="col-6" style="text-align: left">
-                            <b-embed
-                            type="iframe"
-                            :src=faro.urlVista
-                            allowfullscreen
-                            width="1000" height="500"
-                                
-                            ></b-embed>
+                    <div class="row" style="text-align: left;padding-left:0">
+
+                        <div class="col-8" style="padding-left:0">
+                            <b-card style="width: fit-content; height: 100%; text-align:center">
+                                <b-embed
+                                type="iframe"
+                                :src=faro.urlVista
+                                allowfullscreen
+                                width="920" height="500"
+                                    
+                                ></b-embed>
+                            </b-card>
+
 
                         </div>
-                        <div class="col-3"></div>
 
-                        <div class="col-3">
-                            <b-card style="width: fit-content; text-align:center" >
+                        <div class="col-4" style="padding-left:1vw; padding-right: 1vw;">
+                            <b-card style="width: 100%; height: 100%; text-align:center" >
                                 <b-card-text>
                                     Auspicia este faro
                                 </b-card-text>
@@ -64,10 +61,10 @@
                         </div>
                     </div>
 
-                    <div class="row" style="margin-top:1vh">
-                        <b-card style="overflow: hidden;"  >
+                    <div class="row" style="margin-top: 2vh;padding-right: 1vw;">
+                        <b-card style="overflow: hidden; background-color: white;"  >
 
-                            <b-tabs pills card vertical>
+                            <b-tabs pills card vertical content-class="tabsFondoBlanco">
                                 <b-tab title="Historia" active><b-card-text>{{faro.historia}}</b-card-text></b-tab>
                                 <b-tab title="Caracteristicas"><b-card-text>{{faro.caracteristicas}}</b-card-text></b-tab>
                                 <b-tab title="Información Turistica"><b-card-text>{{faro.turismo}}</b-card-text></b-tab>
@@ -76,19 +73,26 @@
                             </b-tabs>
                         
                         </b-card>
+                        <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
+                            <b-card-text>
+                                Presiona la flecha &lt;- para volver al <router-link to="/">inicio</router-link>
+                            </b-card-text>
+                        </b-card>
                         
-                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:1rem; color:white">Ver Comentarios</b-button>
+                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.5vh; color:white">Ver Comentarios</b-button>
+
+                        <b-alert
+                            :show="dismissCountDown"
+                            variant="success"
+                            @dismissed="dismissCountDown=0"
+                            @dismiss-count-down="countDownChanged"
+                            style="height:fit-content; margin-top: 0.5vh">
+                            <h4 class="dark">Comentario agregado con exito!</h4>
+                            <p>Cerrando en: {{ dismissCountDown }}</p>
+                       </b-alert>
 
                         <b-container>
-                            <b-alert
-                                :show="dismissCountDown"
-                                variant="success"
-                                @dismissed="dismissCountDown=0"
-                                @dismiss-count-down="countDownChanged"
-                                style="width:fit-content; height:fit-content">
-                                <h4 class="dark">Comentario agregado con exito!</h4>
-                                <p>Cerrando en: {{ dismissCountDown }}</p>
-                            </b-alert>
+
             
                             <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow style="overflow-y: scroll;">
             
@@ -147,7 +151,7 @@
                                         <div class="d-flex w-30 justify-content-between">
                                     
                                         <h5 class="mb-1">{{comentario.nombre}}</h5>
-                                        <small>{{comentario.fecha}}</small>
+                                        <small>{{fechaAdjust(comentario.fecha)}}</small>
                                     </div>
                                 
                                     <p class="mb-1" style="word-wrap:break-word">
@@ -189,6 +193,11 @@ import { mapGetters } from "vuex";
     },
     activated() {
 
+        
+    
+  
+
+
          // Si se refresca, se devuelve al user al inicio
         if(this.faro == undefined) {
             
@@ -198,13 +207,16 @@ import { mapGetters } from "vuex";
             this.$store.dispatch("putImpresion", this.faro.idFaro)
             this.show = true
             this.form.comentarios.idFaro = this.faro.idFaro
-            this.accesibilidadPagoVariant()
+            this.ingresoPagoVariant()
             this.accesibilidadVariant()
         }
 
     },
 
     created() {
+        window.addEventListener("keydown", e => {
+          if (e.key == 'ArrowLeft') 
+            this.$router.push('/').catch(()=>{}) })
 
         // Si se refresca, se devuelve al user al inicio
         if(this.faro == undefined) {
@@ -212,6 +224,7 @@ import { mapGetters } from "vuex";
         } else {
             this.$store.dispatch("getComentarios", this.faro.idFaro)
         }
+    
     },
 
     data() {
@@ -219,7 +232,7 @@ import { mapGetters } from "vuex";
             dismissSecs: 5,
             dismissCountDown: 0,
             accesibilidad:'',
-            accesibilidadPago:'',
+            ingresoPago:'',
             show:true,
             form: {
                 comentarios:{
@@ -233,6 +246,7 @@ import { mapGetters } from "vuex";
         }
     },
     computed: {
+
         ...mapGetters(['comentarios']),
 
         faros() {
@@ -242,19 +256,24 @@ import { mapGetters } from "vuex";
     },
     methods: {
 
-        accesibilidadPagoVariant(){
+        fechaAdjust(fecha) {
+            fecha = new Date(fecha)
+            return fecha.toLocaleString()
+        },
+
+        ingresoPagoVariant(){
             if (this.faro.accesoPago) {
-                this.accesibilidadPago = 'Acceso pago'
-                return 'warning'
+                this.ingresoPago = 'Ingreso pago'
+                return 'danger'
             }  else {
-                this.accesibilidadPago = 'Acceso gratuito' 
-                return'success' 
+                this.ingresoPago = 'Ingreso gratuito' 
+                return 'success' 
             } 
         },
         accesibilidadVariant() {
             if (this.faro.accesible) {
                 this.accesibilidad = 'Acceso habilitado'
-                return'success' 
+                return 'success' 
                 
             }  else {
                 this.accesibilidad = 'Acceso restringido' 
@@ -268,15 +287,18 @@ import { mapGetters } from "vuex";
             this.dismissCountDown = this.dismissSecs
         },
 
+
+
         onSubmit(event) {
            event.preventDefault()
 
-            this.form.comentarios.fecha = new Date();
+            
+            this.form.comentarios.fecha  = new Date()
 
             try {
                 this.$store.dispatch("putComentario", Object.assign({},this.form))
                 setTimeout(() => {
-                    this.form.comentarios.fecha = 'Ahora mismo';
+                   // this.form.comentarios.fecha = 'Ahora mismo';
                     this.comentarios.comentarios.push(Object.assign({},this.form.comentarios))
 
                     this.onReset(event)
@@ -340,4 +362,7 @@ import { mapGetters } from "vuex";
           }
         }
       }
+    .tabsFondoBlanco{
+        background-color: white
+    }
 </style>

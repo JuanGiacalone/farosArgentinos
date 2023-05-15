@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import ListaAndMapa from '../components/ListaAndMapa.vue'
-import FaroAndComments from "../components/FaroAndComments.vue"
+// import AboutView from '../components/HelloWorld.vue'
 
 import { PiniaVuePlugin } from 'pinia'
 Vue.use(PiniaVuePlugin)
@@ -34,7 +33,12 @@ const router = new VueRouter({
       path: '/farosargentinos',
       name: 'FarosArgentinos',
       component: ListaAndMapa
-    }
+    },
+    // {
+    //   path: '/about',
+    //   name: 'About',
+    //   component: AboutView
+    // }
   ]
 })
 

@@ -11,6 +11,7 @@ const ENDPOINT_COMENTARIOS = ENDPOINT + 'comentarios/'
 
 Vue.use(Vuex)
 
+
 const store = new Vuex.Store({
   namespaced: true,
 
@@ -65,7 +66,7 @@ const store = new Vuex.Store({
     async getComentarios (context, idFaro) {
       try {
           const  res  = await axios.get( ENDPOINT_COMENTARIOS + idFaro )
-
+          
         context.commit('setComentarios', res.data)
       } catch (error) {
         console.log('getComentarios failed' + error);
