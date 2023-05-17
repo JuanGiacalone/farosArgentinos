@@ -156,6 +156,7 @@ export default {
     beforeCreate() {
       this.$store.dispatch('getFaros')
       this.$store.dispatch('getFarosTop5')
+      
     },
 
     methods: {

@@ -44,14 +44,19 @@
 
                         <div class="col-4" style="padding-left:1vw; padding-right: 1vw;">
                             <b-card style="width: 100%; height: 100%; text-align:center" >
-                                <b-card-text>
-                                    Auspicia este faro
-                                </b-card-text>
+                                <b-card style="width: 100%; height: fit-content; text-align:center; background-color;margin-bottom: 1vh;" >
+                                    <b-card-text>
+                                        <h5>Auspicia este faro</h5>
+                                        <h6>{{ publicidades.nombre }}</h6>  
+                                        <h6>{{ publicidades.descripcion }}</h6>
+                                     </b-card-text>
+                                </b-card>
+
                                 <b-embed
                                 type="iframe"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3142.936863538067!2d-57.57094852405874!3d-38.0252513461546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9584de8e276cd16b%3A0x15baf9e20b3b274a!2sYaInsumos!5e0!3m2!1ses-419!2sar!4v1683743027922!5m2!1ses-419!2sar" 
+                                :src=publicidades.url 
                                 allowfullscreen
-                                width="400" height="400"
+                                width="400" height="370"
                                     
                                 ></b-embed>    
 
@@ -75,7 +80,7 @@
                         </b-card>
                         <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
                             <b-card-text>
-                                Presiona la flecha &lt;- para volver al <router-link to="/">inicio</router-link>
+                                Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
                             </b-card-text>
                         </b-card>
                         
@@ -204,7 +209,9 @@ import { mapGetters } from "vuex";
             this.$router.push('/').catch(()=>{});
         } else {
             this.$store.dispatch("getComentarios", this.faro.idFaro)
+            this.$store.dispatch("getPublicidades", this.faro.idFaro)
             this.$store.dispatch("putImpresion", this.faro.idFaro)
+
             this.show = true
             this.form.comentarios.idFaro = this.faro.idFaro
             this.ingresoPagoVariant()
@@ -222,6 +229,7 @@ import { mapGetters } from "vuex";
         if(this.faro == undefined) {
             this.$router.push('/').catch(()=>{});
         } else {
+            
             this.$store.dispatch("getComentarios", this.faro.idFaro)
         }
     
@@ -247,11 +255,12 @@ import { mapGetters } from "vuex";
     },
     computed: {
 
-        ...mapGetters(['comentarios']),
+        ...mapGetters(['comentarios', 'publicidades']),
+        
 
         faros() {
 
-            return this.$store.state.comentarios
+            return this.$store.state.comentarios & this.$store.state.publicidades
         }
     },
     methods: {
@@ -314,11 +323,12 @@ import { mapGetters } from "vuex";
             },
         onReset(event) {
             event.preventDefault()
-            // Reset our form values
+            // Resetea los campos
             this.form.comentarios.email = ''
             this.form.comentarios.nombre = ''
             this.form.comentarios.cuerpo = ''
-            // Trick to reset/clear native browser form validation state
+
+            // Resetea/limpia el estado nativo de la validacion del formulario provista por el navegador.
             this.show = false
             this.$nextTick(() => {
             this.show = true

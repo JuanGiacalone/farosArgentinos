@@ -8,6 +8,7 @@ import createPersistedState from "vuex-persistedstate";
 const ENDPOINT = import.meta.env.VITE_FAROSARGENTINOS_ENDPOINT;
 const ENDPOINT_FAROS = ENDPOINT + 'faros/'
 const ENDPOINT_COMENTARIOS = ENDPOINT + 'comentarios/'
+const ENDPOINT_PUBLICIDADES = ENDPOINT + 'publicidades/'
 
 Vue.use(Vuex)
 
@@ -19,24 +20,26 @@ const store = new Vuex.Store({
   state: {
     faros: [],
     comentarios: [],
-    farosTop5: []  
+    farosTop5: [],
+    publicidades: []  
   },
   // Se definen los cambios que pueden tener los estados
   mutations: {
     setFaros (state, faros) {
       state.faros = faros
-      console.log('setFaros' + state.faros);
-
+      console.log('setFaros');
     },
     setFarosTop5 (state, faros) {
       state.farosTop5 = faros
-      console.log('setFarosTop5' + state.farosTop5);
-
+      console.log('setFarosTop5');
     },
     setComentarios (state, comentarios) {
       state.comentarios = comentarios
-      console.log('setComentarios' + state.comentarios);
-
+      console.log('setComentarios');
+    },
+    setPublicidades (state, publicidades) {
+      state.publicidades = publicidades
+      console.log('setPublicidades');
     },
     
     getNuevosComentarios() {
@@ -45,13 +48,23 @@ const store = new Vuex.Store({
 
   },
   actions: {
+    
+    async getPublicidades (context, idFaro) {
+      try {
+          const  res  = await axios.get( ENDPOINT_PUBLICIDADES + idFaro )
+          
+        context.commit('setPublicidades', res.data)
+      } catch (error) {
+        console.log('getPublicidades fallo: ' + error);
+      }
+    },
     async getFaros (context) {
       try {
         const  res  = await axios.get( ENDPOINT_FAROS )
 
         context.commit('setFaros', res.data)
       } catch (error) {
-        console.log('getFaros failed' + error);
+        console.log('getFaros fallo' + error);
       }
     },
     async getFarosTop5 (context) {
@@ -60,7 +73,7 @@ const store = new Vuex.Store({
         context.commit('setFarosTop5', res.data)
 
       } catch (error) {
-        console.log('get FarosTop5 failed' + error);
+        console.log('get FarosTop5 fallo: ' + error);
       }
     },
     async getComentarios (context, idFaro) {
@@ -69,9 +82,11 @@ const store = new Vuex.Store({
           
         context.commit('setComentarios', res.data)
       } catch (error) {
-        console.log('getComentarios failed' + error);
+        console.log('getComentarios fallo: ' + error);
       }
     },
+
+
     async putComentario(context, data) {
 
       try {
@@ -103,6 +118,9 @@ const store = new Vuex.Store({
     },
     farosTop5: state => {
       return state.farosTop5
+    },
+    publicidades: state => {
+      return state.publicidades
     }
   },
   plugins: [createPersistedState()]
