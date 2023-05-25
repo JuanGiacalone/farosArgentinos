@@ -44,17 +44,17 @@
 
                         <div class="col-4" style="padding-left:1vw; padding-right: 1vw;">
                             <b-card style="width: 100%; height: 100%; text-align:center" >
-                                <b-card style="width: 100%; height: fit-content; text-align:center; background-color;margin-bottom: 1vh;" >
+                                <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke;margin-bottom: 1vh;" >
                                     <b-card-text>
                                         <h5>Auspicia este faro</h5>
-                                        <h6>{{ publicidades.nombre }}</h6>  
+                                        <a :href=publicidades.urlSitio style="font-size: 150%;">{{ publicidades.nombre }}</a>  
                                         <h6>{{ publicidades.descripcion }}</h6>
                                      </b-card-text>
                                 </b-card>
 
                                 <b-embed
                                 type="iframe"
-                                :src=publicidades.url 
+                                :src=publicidades.urlUbicacion 
                                 allowfullscreen
                                 width="400" height="370"
                                     
@@ -79,12 +79,12 @@
                         
                         </b-card>
                         <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
-                            <b-card-text>
+                            <b-card-text style="font-size: 110%;">
                                 Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
                             </b-card-text>
                         </b-card>
                         
-                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.5vh; color:white">Ver Comentarios</b-button>
+                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.5vh; color:white; font-weight: bold;">Ver Comentarios</b-button>
 
                         <b-alert
                             :show="dismissCountDown"
