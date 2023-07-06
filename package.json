@@ -38,6 +38,7 @@
     "start-server-and-test": "^1.14.0",
     "terser": "^5.14.2",
     "vitest": "^0.18.1",
-    "vue-template-compiler": "^2.7.7"
+    "vue-template-compiler": "^2.7.7",
+    "volar-service-vetur": "latest"
   }
 }

@@ -27,15 +27,15 @@
                       <!-- Se bindea el input que se seleccione a la variable searchQuery  -->
                       
           <input autofocus type="text" v-model="searchQuery" placeholder="Buscar..." class="form-control"  
-          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled" >
+          aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm" :disabled="textInputDisabled" id="filterTextInput" >
         </div>
                                                     <!-- textInputDisabled (booleano) hace que se deshabilite el text input en caso de que
                                                     el filtro sea de tipo Acceso... -->
         <!-- input group -->
 
-        <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center;"  >
+        <div class="card faros-list" style="width: auto; padding: 0.4rem; text-align: center; overflow-y: scroll; height: 73vh;"  >
 
-            <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush" id="listFaros">
               
                         <!-- Se muestra lo que se encuentra en la lista de farosFiltrados, si no se filtra,
                         contiene a todos los faros...  -->

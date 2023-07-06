@@ -55,7 +55,7 @@ const store = new Vuex.Store({
           
         context.commit('setPublicidades', res.data)
       } catch (error) {
-        console.log('getPublicidades fallo: ' + error);
+        console.log('GET /PUBLICIDADES falló: VERIFICAR ESTADO DE LA API ' + error);
       }
     },
     async getFaros (context) {
@@ -64,7 +64,7 @@ const store = new Vuex.Store({
 
         context.commit('setFaros', res.data)
       } catch (error) {
-        console.log('getFaros fallo' + error);
+        console.log('GET /FAROS falló : VERIFICAR ESTADO DE LA API ' + error);
       }
     },
     async getFarosTop5 (context) {
@@ -73,7 +73,7 @@ const store = new Vuex.Store({
         context.commit('setFarosTop5', res.data)
 
       } catch (error) {
-        console.log('get FarosTop5 fallo: ' + error);
+        console.log('GET /FAROS/top falló: VERIFICAR ESTADO DE LA API ' + error);
       }
     },
     async getComentarios (context, idFaro) {
@@ -82,7 +82,7 @@ const store = new Vuex.Store({
           
         context.commit('setComentarios', res.data)
       } catch (error) {
-        console.log('getComentarios fallo: ' + error);
+        console.log('GET /COMENTARIOS falló VERIFICAR ESTADO DE LA API ' + error);
       }
     },
 
@@ -94,7 +94,7 @@ const store = new Vuex.Store({
           await axios.put( ENDPOINT_COMENTARIOS + data.comentarios.idFaro, data )
 
       } catch (error) {
-        console.log('putComentario failed ' + error);
+        console.log('PUT /COMENTARIO no retornó 200 OK ' + error);
       }
     },
     async putImpresion(context,idFaro) {

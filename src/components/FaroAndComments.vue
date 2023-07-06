@@ -3,8 +3,9 @@
 
    <div class="container-fluid">
 
-        <div class="row" style="margin-top:0.3rem">
+        <div class="row">
                 <div class="col-3" style="text-align: center" >
+                                <!-- Componente con la descripcion del faro, imagen y nombre -->
                     <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:0.5rem">
                         <b-card-text>
                             {{faro.descripcion}}
@@ -15,7 +16,7 @@
                         </template>
                         <template>
                         </template>
-
+                            <!-- Botones informativos sobre precio y accesibilidad -->
                             <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem">{{this.accesibilidad}}</b-button>
                             <b-button pill :variant="ingresoPagoVariant()" style="margin:0.4rem">{{this.ingresoPago}}</b-button>   
                     </b-card>
@@ -29,13 +30,14 @@
                     <div class="row" style="text-align: left;padding-left:0">
 
                         <div class="col-8" style="padding-left:0">
-                            <b-card style="width: fit-content; height: 100%; text-align:center">
+                            <!-- Componente con la imagen dinamica del faro si tiene -->
+                            <b-card style=" text-align:center">
                                 <b-embed
                                 type="iframe"
                                 :src=faro.urlVista
                                 allowfullscreen
                                 width="920" height="500"
-                                    
+
                                 ></b-embed>
                             </b-card>
 
@@ -44,6 +46,7 @@
 
                         <div class="col-4" style="padding-left:1vw; padding-right: 1vw;">
                             <b-card style="width: 100%; height: 100%; text-align:center" >
+                                <!-- Componente con el auspiciante del faro -->
                                 <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke;margin-bottom: 1vh;" >
                                     <b-card-text>
                                         <h5>Auspicia este faro</h5>
@@ -67,6 +70,8 @@
                     </div>
 
                     <div class="row" style="margin-top: 2vh;padding-right: 1vw;">
+
+                        <!-- Componente con pestañas informativas para el faro -->
                         <b-card style="overflow: hidden; background-color: white;"  >
 
                             <b-tabs pills card vertical content-class="tabsFondoBlanco">
@@ -78,14 +83,17 @@
                             </b-tabs>
                         
                         </b-card>
+                        <!-- Componente que informa al usuario sobre el atajo para volver al inicio -->
                         <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
                             <b-card-text style="font-size: 110%;">
                                 Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
                             </b-card-text>
                         </b-card>
-                        
-                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.5vh; color:white; font-weight: bold;">Ver Comentarios</b-button>
 
+                        <!-- Boton que permite ver los comentarios -->
+                        <b-button variant="info" v-b-toggle.sidebar-variant style="margin-top:0.5vh; color:white; font-weight: bold;" id="showComments">Ver Comentarios</b-button>
+
+                        <!-- Componente que informa sobre el exito de la publicacion de un comentario -->
                         <b-alert
                             :show="dismissCountDown"
                             variant="success"
@@ -96,19 +104,20 @@
                             <p>Cerrando en: {{ dismissCountDown }}</p>
                        </b-alert>
 
+                       <!-- Componente con el formulario para realizar un comentario -->
                         <b-container>
 
-            
+                            
                             <b-sidebar  id="sidebar-variant"  no-header text-variant="light" shadow style="overflow-y: scroll;">
             
             
                                     <b-button v-b-toggle.sidebar-variant variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem; margin-left:2rem" shadow>Cerrar comentarios</b-button>
-                                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow>Crear comentario</b-button>
+                                    <b-button v-b-toggle.sidebar-variant2 variant="btn btn-secondary not-collapsed" aria-controls="sidebar-variant" style="margin:1rem;" shadow id="createComment">Crear comentario</b-button>
                             <b-sidebar  id="sidebar-variant2"  no-header text-variant="light" style="height: fit-content; overflow-y: hidden;">
             
                                 <b-form @submit="onSubmit" @reset="onReset" >
-                                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Enviar</b-button>
-                                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;">Limpiar</b-button>
+                                    <b-button type="submit"  variant="success not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;" id="submitComment">Enviar</b-button>
+                                    <b-button type="reset" variant="danger not-collapsed" class="text-right" style="margin-top:1rem; margin-left:2rem;" id="cleanComment">Limpiar</b-button>
                                     <b-form-group
                                         id="input-group-1"
                                         label-for="input-1"
@@ -122,6 +131,7 @@
                                             ref="emailInput"
                                             required
                                             autofocus
+                
                                         > </b-form-input>
                                     </b-form-group>
                                     <b-form-group id="input-group-2" style="margin-left: 2rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
@@ -129,7 +139,6 @@
                                         id="input-2"
                                         v-model="form.comentarios.nombre"
                                         placeholder="Ingresa tu nombre"
-            
                                         required
                                         ></b-form-input>
                                     </b-form-group>
@@ -149,9 +158,9 @@
             
                                 </b-form>
                             </b-sidebar>
-            
+                                <!-- Componente que ubica los comentarios existentes en una lista -->
                                 <b-list-group 
-                                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem; text-align:left">
+                                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem; text-align:left" id="commentsList">
                                     <b-list-group-item href="#" class="flex-column align-items-start" style="width:95%; margin-left:2rem; margin-top:0.3rem">
                                         <div class="d-flex w-30 justify-content-between">
                                     
@@ -170,19 +179,10 @@
                         
                         </b-sidebar>
                     </b-container>
-            
-            
-
-                    </div>
+                </div>
             </div>
-
-            
-
-
         </div>
-           
     </div>
-   
 </div>
 </template>
 
@@ -192,22 +192,17 @@ import { mapGetters } from "vuex";
  export default {
     name: "FaroAndComments",
 
-    
     props: {
         faro: {}
     },
     activated() {
-
-        
-    
-  
-
 
          // Si se refresca, se devuelve al user al inicio
         if(this.faro == undefined) {
             
             this.$router.push('/').catch(()=>{});
         } else {
+            // Se disparan los gets y el put necesarios
             this.$store.dispatch("getComentarios", this.faro.idFaro)
             this.$store.dispatch("getPublicidades", this.faro.idFaro)
             this.$store.dispatch("putImpresion", this.faro.idFaro)
@@ -221,6 +216,7 @@ import { mapGetters } from "vuex";
     },
 
     created() {
+        // Se define el atajo de teclado
         window.addEventListener("keydown", e => {
           if (e.key == 'ArrowLeft') 
             this.$router.push('/').catch(()=>{}) })
@@ -229,7 +225,7 @@ import { mapGetters } from "vuex";
         if(this.faro == undefined) {
             this.$router.push('/').catch(()=>{});
         } else {
-            
+            // Al crearse se obtienen los comentarios
             this.$store.dispatch("getComentarios", this.faro.idFaro)
         }
     
@@ -254,22 +250,22 @@ import { mapGetters } from "vuex";
         }
     },
     computed: {
-
+        // Se mapean los getters al inicio
         ...mapGetters(['comentarios', 'publicidades']),
-        
 
+        // Devuelve a la instancia el estado de los comentarios y la publicidad
         faros() {
 
             return this.$store.state.comentarios & this.$store.state.publicidades
         }
     },
     methods: {
-
+        // Ajusta la fecha recibida desde la base de datos
         fechaAdjust(fecha) {
             fecha = new Date(fecha)
             return fecha.toLocaleString()
         },
-
+        // Ajusta el boton informativo de pago
         ingresoPagoVariant(){
             if (this.faro.accesoPago) {
                 this.ingresoPago = 'Ingreso pago'
@@ -279,6 +275,7 @@ import { mapGetters } from "vuex";
                 return 'success' 
             } 
         },
+        // Ajusta el boton informativo de accesibilidad
         accesibilidadVariant() {
             if (this.faro.accesible) {
                 this.accesibilidad = 'Acceso habilitado'
@@ -289,9 +286,11 @@ import { mapGetters } from "vuex";
                 return 'warning'
             }
         },
+        // Maneja la cuenta regresiva del pop up
         countDownChanged(dismissCountDown) {
             this.dismissCountDown = dismissCountDown
         },
+        // Muestra la alerta al realiza el comentario
         showAlert() {
             this.dismissCountDown = this.dismissSecs
         },
@@ -299,18 +298,21 @@ import { mapGetters } from "vuex";
 
 
         onSubmit(event) {
-           event.preventDefault()
-
-            
+            event.preventDefault()
+            // Prepara la fecha del instante            
             this.form.comentarios.fecha  = new Date()
 
+            console.log(this.form.comentarios.fecha + 'comm');
+
             try {
+                // Se dispara el put y se envia a la store el form del comentario
                 this.$store.dispatch("putComentario", Object.assign({},this.form))
                 setTimeout(() => {
-                   // this.form.comentarios.fecha = 'Ahora mismo';
+                    // se agrega el comentario a la lista actual
                     this.comentarios.comentarios.push(Object.assign({},this.form.comentarios))
 
                     this.onReset(event)
+                    // Se muestra el componente de exito en el comentario
                     this.showAlert()
                     this.$bvToast.show('my-toast')
             }, 350 ) 
@@ -341,7 +343,11 @@ import { mapGetters } from "vuex";
 }
 </script>
 <style lang="scss">
-
+@media screen and (min-width: 80rem) {
+    .container {
+      margin: 0 0 ;
+    }
+  }
     div.sidebarButtons{
 
         margin-top: 5rem;

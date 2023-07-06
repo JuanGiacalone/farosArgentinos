@@ -56,7 +56,7 @@
                 <router-link to="/contact">Contacto</router-link>
               </p>
               <p>
-                <router-link to="/contact">Terminos y condiciones</router-link>
+                <router-link to="/about">Términos y condiciones</router-link>
               </p>
             </div>
             <!-- Grid column -->
