@@ -40,7 +40,7 @@
 
                          <b-card-text style="color: black;">
 
-                              <body style="color: black;">
+                              <body style="color: black;" id="textoTerms">
                                 <h1>Términos y Condiciones de Uso de FaroArgentinos</h1>
                                 
                                 <h2>Fecha de entrada en vigencia: Junio 2023</h2>
@@ -113,5 +113,17 @@ export default {
 </script>
 
 <style>
+@media screen and (min-width: 80rem) {
+  #textoContacto{
+      font-size: small;
+  }
+  div.container-fluid {
+      font-size: small;
+      
+  }
+  #textoTerms {
+    font-size: small;
+  }
 
+}
 </style>

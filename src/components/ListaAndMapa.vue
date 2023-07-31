@@ -52,7 +52,7 @@
       <div class="col-7">
 
           <div class="row map">
-            <div class="card" style="padding: 0.4rem; overflow-y: auto;">
+            <div class="card" style="padding: 0.4rem; overflow-y: auto;" id="divMapaFaros">
 
               <!-- Componente externo LeafletVue, comienza configurando el zoom y las coordenas de inicio -->
               <l-map
@@ -227,6 +227,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+@media screen and (min-width: 80rem) {
+  #divMapaFaros {
+    height: 83vh;
+  }
+  .container-fluid{
+    padding-bottom: 0;
+  }
+}
 
   .leaflet-container {
     background-color: white ;

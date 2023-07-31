@@ -4,7 +4,7 @@
    <div class="container-fluid">
 
         <div class="row">
-                <div class="col-3" style="text-align: center" >
+                <div class="col-3" style="text-align: center" id="divDescripcionFaro" >
                                 <!-- Componente con la descripcion del faro, imagen y nombre -->
                     <b-card :title=faro.nombre :img-src=faro.urlImagen img-alt="Image" img-top style="width:fit-content; padding:0.5rem">
                         <b-card-text>
@@ -17,8 +17,8 @@
                         <template>
                         </template>
                             <!-- Botones informativos sobre precio y accesibilidad -->
-                            <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem">{{this.accesibilidad}}</b-button>
-                            <b-button pill :variant="ingresoPagoVariant()" style="margin:0.4rem">{{this.ingresoPago}}</b-button>   
+                            <b-button pill :variant="accesibilidadVariant()" style="margin:0.4rem" id="b-buttonDescripcion">{{this.accesibilidad}}</b-button>
+                            <b-button pill :variant="ingresoPagoVariant()" style="margin:0.4rem" id="b-buttonDescripcion">{{this.ingresoPago}}</b-button>   
                     </b-card>
 
                     
@@ -29,7 +29,7 @@
 
                     <div class="row" style="text-align: left;padding-left:0">
 
-                        <div class="col-8" style="padding-left:0">
+                        <div class="col-8" style="padding-left:0" id="divVistaDinamica">
                             <!-- Componente con la imagen dinamica del faro si tiene -->
                             <b-card style=" text-align:center">
                                 <b-embed
@@ -37,14 +37,14 @@
                                 :src=faro.urlVista
                                 allowfullscreen
                                 width="920" height="500"
-
+                                id="b-embedVistaDinamica"
                                 ></b-embed>
                             </b-card>
 
 
                         </div>
 
-                        <div class="col-4" style="padding-left:1vw; padding-right: 1vw;">
+                        <div class="col-4" style="padding-left:1vw; padding-right: 1vw;" id="divPublicidades">
                             <b-card style="width: 100%; height: 100%; text-align:center" >
                                 <!-- Componente con el auspiciante del faro -->
                                 <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke;margin-bottom: 1vh;" >
@@ -60,12 +60,11 @@
                                 :src=publicidades.urlUbicacion 
                                 allowfullscreen
                                 width="400" height="370"
-                                    
+                                id="b-embedVistaUbicacion"
                                 ></b-embed>    
 
                             </b-card>
                             
-
                         </div>
                     </div>
 
@@ -344,9 +343,38 @@ import { mapGetters } from "vuex";
 </script>
 <style lang="scss">
 @media screen and (min-width: 80rem) {
+    body {
+        overflow-x:hidden ;
+    }
     .container {
       margin: 0 0 ;
     }
+    #divDescripcionFaro{
+        font-size: small;
+    }
+    #b-buttonDescripcion{
+        font-size: small;
+        margin: 0;
+        justify-content: flex-start;
+    }
+    #divPublicidades {
+        width: 17vw;
+        height: 77.5vh;
+        font-size: small;
+        padding-right: 0.5vw;
+    }
+    #divVistaDinamica {
+        width: 57vw;
+        padding-right: 0vw;
+    }
+    #b-embedVistaDinamica {
+        width: 54vw;
+    }
+    #b-embedVistaUbicacion {
+        width: 13vw;
+        height: 45vh;
+    }
+
   }
     div.sidebarButtons{
 

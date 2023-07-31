@@ -26,5 +26,8 @@ export default {
 </script>
 
 <style>
+header{
+  display: none;
+}
 
 </style>
