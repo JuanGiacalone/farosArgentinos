@@ -25,4 +25,12 @@ npm run dev
 
 ```sh
 npm run build
+
+```
+
+### Build the Docker image with
+
+```sh
+docker build -t faros-argentinos:VERSION-X -f farosArgentinos/Dockerfile .
+
 ```

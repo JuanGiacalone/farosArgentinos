@@ -1,13 +1,17 @@
 # build stage
-FROM node:lts-alpine as build-stage
-WORKDIR /app
-COPY package*.json ./
+FROM node:19.8-alpine as builder
+
+WORKDIR /home/jp/nginx/nginx-image/
+COPY /farosArgentinos/package.json /
+RUN echo npm -v
 RUN npm install
-COPY . .
-RUN npm run build
+COPY /farosArgentinos/ .
+RUN npm run buildx
+
 
 # production stage
 FROM nginx:stable-alpine as production-stage
-COPY --from=build-stage /app/dist /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /home/jp/nginx/nginx-image/
+COPY farosArgentinos/dist/ /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]  
