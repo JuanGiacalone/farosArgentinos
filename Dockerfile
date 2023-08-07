@@ -15,4 +15,3 @@ WORKDIR /home/jp/nginx/nginx-image/
 COPY farosArgentinos/dist/ /usr/share/nginx/html
 
 CMD ["nginx", "-g", "daemon off;"]  
-    

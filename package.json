@@ -2,7 +2,7 @@
   "name": "faros-argentinos",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "buildx":"vite build",
     "preview": "vite preview --port 4173"
@@ -34,6 +34,7 @@
     "start-server-and-test": "^1.14.0",
     "terser": "^5.14.2",
     "vitest": "^0.18.1",
-    "vue-template-compiler": "^2.7.7"
+    "vue-template-compiler": "^2.7.7",
+    "volar-service-vetur": "latest"
   }
 }

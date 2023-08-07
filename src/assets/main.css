@@ -4,8 +4,11 @@
   max-width: auto;
   margin: 0rem;
   padding: 0rem;
-  margin-top: 2rem;
+  margin-top: 0rem;
   font-weight: normal;
+}
+div.container-fluid {
+  margin-top: 3.3rem;
 }
 
 a,
