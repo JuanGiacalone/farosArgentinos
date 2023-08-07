@@ -229,13 +229,12 @@ export default {
 <style lang="scss" scoped>
 @media screen and (min-width: 80rem) {
   #divMapaFaros {
-    height: 83vh;
+    height: 79.5vh;
   }
   .container-fluid{
     padding-bottom: 0;
   }
 }
-
   .leaflet-container {
     background-color: white ;
   }
@@ -258,7 +257,6 @@ export default {
 }
 div.container-fluid {
   
-  margin-top: 2rem;
   background-color: whitesmoke;
   padding: 1rem;
 }

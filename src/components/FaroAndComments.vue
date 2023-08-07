@@ -38,16 +38,17 @@
                                 allowfullscreen
                                 width="920" height="500"
                                 id="b-embedVistaDinamica"
+                                style="overflow-y: hidden;"
+                                scrolling="no"
                                 ></b-embed>
                             </b-card>
-
-
+ 
                         </div>
 
                         <div class="col-4" style="padding-left:1vw; padding-right: 1vw;" id="divPublicidades">
                             <b-card style="width: 100%; height: 100%; text-align:center" >
                                 <!-- Componente con el auspiciante del faro -->
-                                <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke;margin-bottom: 1vh;" >
+                                <b-card style="width: 100%; height: fit-content ;text-align:center; background-color:whitesmoke;margin-bottom: 1vh;" >
                                     <b-card-text>
                                         <h5>Auspicia este faro</h5>
                                         <a :href=publicidades.urlSitio style="font-size: 150%;">{{ publicidades.nombre }}</a>  
@@ -59,7 +60,7 @@
                                 type="iframe"
                                 :src=publicidades.urlUbicacion 
                                 allowfullscreen
-                                width="400" height="370"
+                                width="400" height="350"
                                 id="b-embedVistaUbicacion"
                                 ></b-embed>    
 
@@ -359,7 +360,7 @@ import { mapGetters } from "vuex";
     }
     #divPublicidades {
         width: 17vw;
-        height: 77.5vh;
+        height: 70.5vh;
         font-size: small;
         padding-right: 0.5vw;
     }
@@ -369,10 +370,12 @@ import { mapGetters } from "vuex";
     }
     #b-embedVistaDinamica {
         width: 54vw;
+        overflow-y: hidden;
+        overflow-block: clip;
     }
     #b-embedVistaUbicacion {
-        width: 13vw;
-        height: 45vh;
+        width: 12.5vw;
+        height: 42vh;
     }
 
   }
@@ -391,7 +394,6 @@ import { mapGetters } from "vuex";
     div.container-fluid {
         
         color: black;
-        margin-top: 2rem;
         background-color: whitesmoke;
         padding: 1rem;
       }

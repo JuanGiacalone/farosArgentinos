@@ -6,6 +6,7 @@ import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
 const ENDPOINT = import.meta.env.VITE_FAROSARGENTINOS_ENDPOINT;
+console.log(ENDPOINT);
 const ENDPOINT_FAROS = ENDPOINT + 'faros/'
 const ENDPOINT_COMENTARIOS = ENDPOINT + 'comentarios/'
 const ENDPOINT_PUBLICIDADES = ENDPOINT + 'publicidades/'
