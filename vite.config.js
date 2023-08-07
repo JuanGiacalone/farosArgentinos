@@ -32,17 +32,9 @@ const config = defineConfig({
         targets: ['ie >= 11'],
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'] 
       }),
-      externalGlobals({
-        vue: 'Vue',
-        'vue-router': 'VueRouter',
-      }),
     ],
     output: {
-      format: 'es',
-      globals: {
-        vue: 'Vue',
-        'vue-router': 'VueRouter',
-      },
+      format: 'es'
     },
   },
   plugins: [
