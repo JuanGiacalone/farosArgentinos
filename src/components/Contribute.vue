@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid" style="margin-top: 0; background-color: white;" >
-    <div class="row">
+  <div class="container-fluid" style="background-color: white;margin-top: 7vh" >
+    <div class="row" >
 
-                <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke; margin: 35vh 0vh 30vh 0vh;" >
+                <b-card style="width: 100%; height: fit-content; text-align:center; background-color:whitesmoke;" >
                     <b-card-text style="color: black;">
                         <h3>No se encontraron imágenes interactivas para este faro</h3>
                         <h4>Te invitamos a visitarlo y realizar una captura dinámica vos mismo</h4>

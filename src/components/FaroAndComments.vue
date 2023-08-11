@@ -31,18 +31,26 @@
 
                         <div class="col-8" style="padding-left:0" id="divVistaDinamica">
                             <!-- Componente con la imagen dinamica del faro si tiene -->
+                            
                             <b-card style=" text-align:center">
-                                <b-embed
-                                type="iframe"
-                                :src=faro.urlVista
-                                allowfullscreen
-                                width="920" height="500"
-                                id="b-embedVistaDinamica"
-                                style="overflow-y: hidden;"
-                                scrolling="no"
-                                ></b-embed>
-                            </b-card>
- 
+                                <div v-if="isContribute">
+                                    <Contribute id="compContribute"/>
+                                </div>
+                                <div v-else>
+                                    <b-embed
+                                    type="iframe"
+                                    :src=urlVistaFaro
+                                    allowfullscreen
+                                    width="920" height="500"
+                                    id="b-embedVistaDinamica"
+                                    style="overflow-y: hidden;"
+                                    scrolling="no"
+                                    ></b-embed>
+                                </div>
+
+                            </b-card>    
+
+
                         </div>
 
                         <div class="col-4" style="padding-left:1vw; padding-right: 1vw;" id="divPublicidades">
@@ -188,6 +196,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import Contribute from './Contribute.vue'
 
  export default {
     name: "FaroAndComments",
@@ -195,7 +204,12 @@ import { mapGetters } from "vuex";
     props: {
         faro: {}
     },
+    components:{
+        Contribute
+    },
     activated() {
+
+
 
          // Si se refresca, se devuelve al user al inicio
         if(this.faro == undefined) {
@@ -211,6 +225,8 @@ import { mapGetters } from "vuex";
             this.form.comentarios.idFaro = this.faro.idFaro
             this.ingresoPagoVariant()
             this.accesibilidadVariant()
+            this.isContribute = this.checkContribute(this.faro.urlVista)
+            this.urlVistaFaro = this.faro.urlVista
         }
 
     },
@@ -247,6 +263,8 @@ import { mapGetters } from "vuex";
                 cuerpo: '',
                 }
             },
+            urlVistaFaro:'',
+            isContribute: Boolean,
         }
     },
     computed: {
@@ -260,6 +278,13 @@ import { mapGetters } from "vuex";
         }
     },
     methods: {
+        
+        checkContribute(urlVista) {
+            if ( urlVista == '/contribute' ) {
+                return true
+            } else return false         
+        },
+
         // Ajusta la fecha recibida desde la base de datos
         fechaAdjust(fecha) {
             fecha = new Date(fecha)
@@ -360,7 +385,7 @@ import { mapGetters } from "vuex";
     }
     #divPublicidades {
         width: 17vw;
-        height: 70.5vh;
+        height: 60vh;
         font-size: small;
         padding-right: 0.5vw;
     }
@@ -373,9 +398,15 @@ import { mapGetters } from "vuex";
         overflow-y: hidden;
         overflow-block: clip;
     }
+    #divContribute {
+        height: 35vh;
+    }
+    #compContribute {
+        height: 35vh;
+    }
     #b-embedVistaUbicacion {
         width: 12.5vw;
-        height: 42vh;
+        height: 41vh;
     }
 
   }

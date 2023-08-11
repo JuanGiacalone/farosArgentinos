@@ -5,7 +5,9 @@
 </script>
 
 <template>
+  
   <div id="app">
+    <div id="content" redirect_to="{{redirect_to}}"></div>
     <header>
         <nav class="navbar navbar-expand-sm fixed-top bg bg-dark navbar-dark">
           <div class="container">
@@ -37,7 +39,7 @@
                 FarosArgentinos
               </h6>
               <p>
-                &nbsp; El objetivo del presente proyecto es promover el turismo moderno que surge alrededor del método de balizamiento más distinguible y apreciado, esas distintivas balizas que se encuentran a lo largo de los 6.816 kilómetros de costa argentina conocidas como faros.
+                &nbsp; El objetivo del presente proyecto es promover el turismo moderno que surge alrededor del método de balizamiento más distinguible y apreciado. Esas distintivas balizas que se encuentran a lo largo de los 6.816 kilómetros de costa argentina conocidas como faros.
               </p>
             </div>
             <!-- Grid column -->
