@@ -1,27 +1,27 @@
 # FarosArgentinos
  Web con fines turisticos
 
-## Recommended IDE Setup
+## Configurar IDE
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## Configurar Vite
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
-## Project Setup
+## Instalar dependencias
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Compilar y correr entorno de desarrollo
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Compila y minifica para producción
 
 ```sh
 npm run build

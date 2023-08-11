@@ -1,9 +1,9 @@
 <template>
-    <div class="container-fluid" >
+    <div class="container-fluid" style="margin-top: 7vh" >
         <div class="row" style="font-size: small;" >
             
             <div class="col-md-4" style="width: 100vw;">
-                <b-card style="text-align:center; margin: 4vh 0vh 2vh 0vh; justify-self: center; " >
+                <b-card style="text-align:center; margin: 0vh 0vh 2vh 0vh; justify-self: center; " >
                     <b-card style="background-color:whitesmoke; " >
                         <b-card-text style="color: black; " id="textoContacto">
                             <h3>Juan Pablo Giacalone</h3>

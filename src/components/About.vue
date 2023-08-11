@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid" style="margin-top: 4vh;" >
+    <div class="container-fluid" style="margin-top: 7vh;" >
         <div class="row justify-content-center" style="width: fit-content; "  >
             <div class="col-md-4">
                 <b-card>

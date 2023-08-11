@@ -103,8 +103,11 @@
               v-for="faro in farosTop5" :key="faro.idFaro"
           class="list-group-item"
           >
+
           <!-- Para cada uno se arma un router link que redirige a la vista con los datos de faro, que van como parametro -->    
-          <router-link :to="{ name: 'faro' , params: { faro: faro }}">{{faro.nombre}}</router-link></li>
+          <router-link :to="{ name: 'faro' , params: { faro: faro } }">{{faro.nombre}}</router-link>
+
+        </li>
         </ul>
       </div>
       <!-- card faros list --> 
@@ -148,7 +151,7 @@ export default {
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             marker: L.latLng(47.413220, -1.219482),
             icon:iconoFarito,
-            iconSize: [30,40]
+            iconSize: [30,40],
             
         };
     },
@@ -175,11 +178,11 @@ export default {
     // Los metodos dentro de computed permiten modificar y manipular valores que unicamente ya existen en el scope
     computed: { 
 
-      // to comment
+      // mapeo las variables faros con los datos obtenidos de sus gets
       ...mapGetters(['faros']),
       ...mapGetters(['farosTop5']),
+      
       farosFiltrados : function () {
-          
         // Devuelve el array filtrado segun el filtro utilizado
         // El this.faros hace referencia a la lista con todos los faros que obtuvo el geter invocado en ...mapGetters
       
@@ -227,13 +230,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-@media screen and (min-width: 80rem) {
+@media screen and (resolution: 150dpi) {
   #divMapaFaros {
-    height: 79.5vh;
+    height: 88.5vh;
   }
   .container-fluid{
     padding-bottom: 0;
   }
+
+}
+@media (min-width: 1920px) and (max-width: 1080px)  {
+  #divMapaFaros {
+    height: 64vh
+  }
+}
+#divMapaFaros {
+  height: 80vh;
 }
   .leaflet-container {
     background-color: white ;

@@ -4,14 +4,13 @@ import ListaAndMapa from '../components/ListaAndMapa.vue'
 import About from '../components/About.vue'
 import Contact from '../components/Contact.vue'
 import Contribute from '../components/Contribute.vue'
+ // importes dinamicos
+const FaroAndCommentsLazy = () => import('../components/FaroAndComments.vue')
 
 import { PiniaVuePlugin } from 'pinia'
 Vue.use(PiniaVuePlugin)
 
 Vue.use(VueRouter)
-
- // importes dinamicos
- const FaroAndCommentsLazy = () => import('../components/FaroAndComments.vue');
 
 const router = new VueRouter({
 
