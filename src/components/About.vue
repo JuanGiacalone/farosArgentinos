@@ -89,7 +89,7 @@
                                 <h3>6. Ley aplicable y jurisdicción</h3>
                                 <p>Estos Términos se regirán e interpretarán de acuerdo con las leyes de Argentina. Cualquier disputa relacionada con estos Términos estará sujeta a la jurisdicción exclusiva de los tribunales ubicados en Argentina.</p>
                                 
-                                <p>Si tienes alguna pregunta o inquietud sobre estos Términos y Condiciones de Uso, contáctanos a través de <a href="/contact">la información de contacto</a>.</p>
+                                <p>Si tienes alguna pregunta o inquietud sobre estos Términos y Condiciones de Uso, contáctanos a través de <router-link to="/contact">la información de contacto</router-link>.</p>
                                 
                                 <p>Al utilizar FaroArgentinos, confirmas que has leído, comprendido y aceptado estos Términos y Condiciones de Uso. ¡Disfruta de tu experiencia en la aplicación turística FaroArgentinos!</p>
                               </body>
@@ -100,14 +100,24 @@
             </div>
                 
         </div>
-        
+        <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
+          <b-card-text style="font-size: 110%;">
+              Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
+          </b-card-text>
+        </b-card>
       </div>
 </template>
 
 <script>
 export default {
     name: 'About',
-    props:{}
+    props:{},
+    created() {
+                // Se define el atajo de teclado
+        window.addEventListener("keydown", e => {
+        if (e.key == 'ArrowLeft') 
+        this.$router.push('/').catch(()=>{}) })
+    }
 
 } 
 </script>
@@ -124,6 +134,8 @@ export default {
   #textoTerms {
     font-size: small;
   }
-
+  b-card-text {
+    color: black;
+  }
 }
 </style>

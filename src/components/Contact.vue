@@ -17,14 +17,24 @@
             </div>
             
         </div>
-        
-      </div>
+        <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
+            <b-card-text style="font-size: 110%;">
+                Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
+            </b-card-text>
+        </b-card>
+    </div>
 </template>
 
 <script>
 export default {
     name: 'Contact',
-    props:{}
+    props:{},
+    created() {
+                // Se define el atajo de teclado
+        window.addEventListener("keydown", e => {
+        if (e.key == 'ArrowLeft') 
+        this.$router.push('/').catch(()=>{}) })
+    }
 
 }
 </script>
@@ -39,6 +49,9 @@ export default {
     }
     footer{
         font-size:small ;
+    }
+    b-card-text{
+        color: black;
     }
 }
 
