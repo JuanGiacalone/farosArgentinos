@@ -1,6 +1,6 @@
 {
   "name": "faros-argentinos",
-  "version": "1.1.1dockerImage",
+  "version": "1.2",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",

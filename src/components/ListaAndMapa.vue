@@ -130,7 +130,13 @@
 import L from 'leaflet'
 import {  LMap, LTileLayer, LMarker, LIcon, LPopup} from 'vue2-leaflet'
 import iconoFarito from '../assets/faro.svg'
-import { mapGetters } from "vuex";
+import markershadow from '../assets/marker-shadow.png'
+import markericon from '../assets/marker-icon.png'
+import { mapGetters } from "vuex"
+
+const API_KEY_THUNDERFOREST = import.meta.env.VITE_APIKEY_THUNDERFOREST
+const URL_THUNDERFOREST = 'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey='+API_KEY_THUNDERFOREST
+
 export default {
 
     name: "ListaAndMapa",
@@ -147,12 +153,13 @@ export default {
             center: L.latLng(-41.94434618654884, -62.15707946259374),
             currentCenter: L.latLng(-41.94434618654884, -62.15707946259374),
             currentZoom: 4,
-            url:'https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=166ddc60b6b04768acb4662c580d4a70',
+            url: URL_THUNDERFOREST,
             attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
             marker: L.latLng(47.413220, -1.219482),
             icon:iconoFarito,
             iconSize: [30,40],
-            
+            iconsImg: [markericon, markershadow]
+
         };
     },
     // Metodo que realiza las llamadas elementales antes que se cree la vista
