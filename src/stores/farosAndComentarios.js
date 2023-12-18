@@ -6,7 +6,7 @@ import Vuex from 'vuex'
 import createPersistedState from "vuex-persistedstate";
 
 const ENDPOINT = import.meta.env.VITE_FAROSARGENTINOS_ENDPOINT;
-console.log(ENDPOINT);
+
 const ENDPOINT_FAROS = ENDPOINT + 'faros/'
 const ENDPOINT_COMENTARIOS = ENDPOINT + 'comentarios/'
 const ENDPOINT_PUBLICIDADES = ENDPOINT + 'publicidades/'
@@ -28,19 +28,19 @@ const store = new Vuex.Store({
   mutations: {
     setFaros (state, faros) {
       state.faros = faros
-      console.log('setFaros');
+      
     },
     setFarosTop5 (state, faros) {
       state.farosTop5 = faros
-      console.log('setFarosTop5');
+      
     },
     setComentarios (state, comentarios) {
       state.comentarios = comentarios
-      console.log('setComentarios');
+      
     },
     setPublicidades (state, publicidades) {
       state.publicidades = publicidades
-      console.log('setPublicidades');
+      
     },
     
     getNuevosComentarios() {

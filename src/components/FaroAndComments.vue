@@ -82,7 +82,7 @@
                         <!-- Componente con pestañas informativas para el faro -->
                         <b-card style="overflow: hidden; background-color: white;"  >
 
-                            <b-tabs pills card vertical content-class="tabsFondoBlanco">
+                            <b-tabs pills card vertical no-key-nav content-class="tabsFondoBlanco">
                                 <b-tab title="Historia" active><b-card-text>{{faro.historia}}</b-card-text></b-tab>
                                 <b-tab title="Caracteristicas"><b-card-text>{{faro.caracteristicas}}</b-card-text></b-tab>
                                 <b-tab title="Información Turistica"><b-card-text>{{faro.turismo}}</b-card-text></b-tab>

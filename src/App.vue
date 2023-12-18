@@ -7,7 +7,7 @@
 <template>
   
   <div id="app">
-    <div id="content" redirect_to="{{redirect_to}}"></div>
+    <div id="content" :redirect_to="redirect_to"></div>
     <header>
         <nav class="navbar navbar-expand-sm fixed-top bg bg-dark navbar-dark">
           <div class="container">
