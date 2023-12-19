@@ -77,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="row" style="margin-top: 2vh;padding-right: 1vw;">
+                    <div class="row" style="margin-top: 1vh;padding-right: 1vw;">
 
                         <!-- Componente con pestañas informativas para el faro -->
                         <b-card style="overflow: hidden; background-color: white;"  >
@@ -92,8 +92,8 @@
                         
                         </b-card>
                         <!-- Componente que informa al usuario sobre el atajo para volver al inicio -->
-                        <b-card style="width:100%; text-align:center; margin-top: 0.5vh;" >
-                            <b-card-text style="font-size: 110%;">
+                        <b-card style="text-align:center; margin-top: 0.3vh;" >
+                            <b-card-text style="font-size: 100%">
                                 Presiona la tecla <router-link to="/">&lt;-</router-link> para volver al <router-link to="/">inicio</router-link>
                             </b-card-text>
                         </b-card>
@@ -142,7 +142,7 @@
                 
                                         > </b-form-input>
                                     </b-form-group>
-                                    <b-form-group id="input-group-2" style="margin-left: 2rem; margin-bottom:0.5rem;margin-top:0.5rem; width:75%;">
+                                    <b-form-group id="input-group-2" style="margin-left: 2remrem;margin-top:0.5rem; width:75%;">
                                         <b-form-input
                                         id="input-2"
                                         v-model="form.comentarios.nombre"
@@ -168,7 +168,7 @@
                             </b-sidebar>
                                 <!-- Componente que ubica los comentarios existentes en una lista -->
                                 <b-list-group 
-                                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.3rem; text-align:left" id="commentsList">
+                                    v-for="comentario, index in comentarios.comentarios.slice().reverse()" :key=index style="margin-top:0.5rem; text-align:left" id="commentsList">
                                     <b-list-group-item href="#" class="flex-column align-items-start" style="width:95%; margin-left:2rem; margin-top:0.3rem">
                                         <div class="d-flex w-30 justify-content-between">
                                     
