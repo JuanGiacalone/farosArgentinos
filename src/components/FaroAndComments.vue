@@ -372,9 +372,7 @@ import Contribute from './Contribute.vue'
     body {
         overflow-x:hidden ;
     }
-    .container {
-      margin: 0 0 ;
-    }
+
     #divDescripcionFaro{
         font-size: small;
     }
