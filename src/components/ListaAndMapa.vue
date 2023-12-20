@@ -20,8 +20,8 @@
               <b-dropdown-divider></b-dropdown-divider>
               <b-dropdown-item @click="filterSearch('Acceso Libre',true)">Acceso Libre</b-dropdown-item>
               <b-dropdown-item @click="filterSearch('Acceso Restringido',true)">Acceso Restringido</b-dropdown-item>
-              <b-dropdown-item @click="filterSearch('Acceso Gratuito',true)">Ingreso Gratuito</b-dropdown-item>
-              <b-dropdown-item @click="filterSearch('Acceso Pago',true)">Ingreso Pago</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Ingreso Gratuito',true)">Ingreso Gratuito</b-dropdown-item>
+              <b-dropdown-item @click="filterSearch('Ingreso Pago',true)">Ingreso Pago</b-dropdown-item>
             </b-dropdown>
           </div>
                       <!-- Se bindea el input que se seleccione a la variable searchQuery  -->
@@ -212,10 +212,10 @@ export default {
             case 'acceso restringido':
               faros = faro.accesible == false
               break;
-            case 'acceso gratuito':
+            case 'ingreso gratuito':
               faros = faro.accesoPago == false
               break;
-            case 'acceso pago':
+            case 'ingreso pago':
               faros = faro.accesoPago == true
               break;
 
