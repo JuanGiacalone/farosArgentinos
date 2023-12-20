@@ -142,7 +142,7 @@
                 
                                         > </b-form-input>
                                     </b-form-group>
-                                    <b-form-group id="input-group-2" style="margin-left: 2remrem;margin-top:0.5rem; width:75%;">
+                                    <b-form-group id="input-group-2" style="margin-left: 2rem;margin-top:0.5rem;margin-bottom:0.7rem; width:75%;">
                                         <b-form-input
                                         id="input-2"
                                         v-model="form.comentarios.nombre"
